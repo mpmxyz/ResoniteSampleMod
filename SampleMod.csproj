@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SampleMod</RootNamespace>
+    <AssemblyName>SampleMod</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Harmony">
+      <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Assets">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Assets.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Quantity">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Quantity.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Commands">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Weaver">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Weaver.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.FrooxEngine">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFluxBindings">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="ResoniteModLoader">
+      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="QuantityX">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\QuantityX.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleMod.cs" />
+    <Compile Include="TestableCode.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+    <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
+    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+    <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
+    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+  </PropertyGroup>
+</Project>
