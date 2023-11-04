@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">RML</Platform>
     <ProjectGuid>{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -13,19 +13,36 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|RML' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\DebugRML\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|RML' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\ReleaseRML\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|MonkeyLoader' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\DebugMonkey\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|MonkeyLoader' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\ReleaseMonkey\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,8 +51,11 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Harmony">
+    <Reference Include="Harmony" Condition="$(Platform)' == 'RML'">
       <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Harmony" Condition="$(Platform)' == 'MonkeyLoader'">
+      <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Elements.Assets">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Assets.dll</HintPath>
@@ -55,6 +75,9 @@
     <Reference Include="FrooxEngine.Weaver">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Weaver.dll</HintPath>
     </Reference>
+    <Reference Include="MonkeyLoader" Condition="$(Platform)' == 'MonkeyLoader'">
+      <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
+    </Reference>
     <Reference Include="ProtoFlux.Core">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Core.dll</HintPath>
     </Reference>
@@ -67,7 +90,7 @@
     <Reference Include="ProtoFluxBindings">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
     </Reference>
-    <Reference Include="ResoniteModLoader">
+    <Reference Include="ResoniteModLoader" Condition="$(Platform)' == 'RML'">
       <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
     </Reference>
     <Reference Include="QuantityX">
@@ -87,16 +110,25 @@
     <Compile Include="TestableCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release - RML|AnyCPU'">
+    <PostBuildEvent>copy /Y $(TargetPath) "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - RML|AnyCPU'">
+    <PostBuildEvent>copy /Y $(TargetPath) "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release - MonkeyLoader|AnyCPU'">
+    <PostBuildEvent>copy /Y $(TargetPath) "$(ResonitePath)\MonkeyLoader\Mods"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - MonkeyLoader|AnyCPU'">
+    <PostBuildEvent>copy /Y $(TargetPath) "$(ResonitePath)\MonkeyLoader\Mods"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - RML|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release - RML|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>

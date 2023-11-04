@@ -9,18 +9,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|MonkeyLoader = Debug|MonkeyLoader
+		Debug|RML = Debug|RML
+		Release|MonkeyLoader = Release|MonkeyLoader
+		Release|RML = Release|RML
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|MonkeyLoader.ActiveCfg = Debug|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|MonkeyLoader.Build.0 = Debug|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|RML.ActiveCfg = Debug|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|RML.Build.0 = Debug|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|MonkeyLoader.ActiveCfg = Release|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|MonkeyLoader.Build.0 = Release|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|RML.ActiveCfg = Release|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|RML.Build.0 = Release|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|MonkeyLoader.ActiveCfg = Debug|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|MonkeyLoader.Build.0 = Debug|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|RML.ActiveCfg = Debug|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|RML.Build.0 = Debug|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|MonkeyLoader.ActiveCfg = Release|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|MonkeyLoader.Build.0 = Release|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|RML.ActiveCfg = Release|Any CPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|RML.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
