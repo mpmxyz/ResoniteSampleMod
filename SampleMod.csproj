@@ -51,10 +51,10 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Harmony" Condition="$(Platform)' == 'RML'">
+    <Reference Include="Harmony" Condition="'$(Platform)' == 'RML'">
       <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Harmony" Condition="$(Platform)' == 'MonkeyLoader'">
+    <Reference Include="Harmony" Condition="'$(Platform)' == 'MonkeyLoader'">
       <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Elements.Assets">
@@ -75,7 +75,7 @@
     <Reference Include="FrooxEngine.Weaver">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Weaver.dll</HintPath>
     </Reference>
-    <Reference Include="MonkeyLoader" Condition="$(Platform)' == 'MonkeyLoader'">
+    <Reference Include="MonkeyLoader" Condition="'$(Platform)' == 'MonkeyLoader'">
       <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
     </Reference>
     <Reference Include="ProtoFlux.Core">
@@ -90,7 +90,7 @@
     <Reference Include="ProtoFluxBindings">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
     </Reference>
-    <Reference Include="ResoniteModLoader" Condition="$(Platform)' == 'RML'">
+    <Reference Include="ResoniteModLoader" Condition="'$(Platform)' == 'RML'">
       <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
     </Reference>
     <Reference Include="QuantityX">
