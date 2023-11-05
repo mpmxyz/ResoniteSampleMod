@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' Or '$(Platform)' == 'Any CPU' ">RML</Platform>
+    <Platform Condition=" '$(Platform)' == '' Or '$(Platform)' == 'Any CPU' ">MonkeyLoader</Platform>
     <ProjectGuid>{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SampleMod</RootNamespace>
     <AssemblyName>mpmxyz.SampleMod</AssemblyName>
+	<Authors>mpmxyz</Authors>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -124,8 +125,14 @@
 		copy /Y "$(ResonitePath)\MonkeyLoader\GamePacks\MonkeyLoader.GamePacks.Resonite.nupkg" "$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite.zip"
 		powershell -command "Expand-Archive -Force '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite.zip' '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite'"
 	</PreBuildEvent>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "$(ResonitePath)\MonkeyLoader\Mods"</PostBuildEvent>
+    <PostBuildEvent>
+		nuget pack "$(ProjectDir)\SampleMod.csproj"
+		copy /Y "$(TargetDir)\mpmxyz.SampleMod.1.0.0.nupkg" "$(ResonitePath)\MonkeyLoader\Mods"
+	</PostBuildEvent>
   </PropertyGroup>
+	<PropertyGroup>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
   <PropertyGroup Condition="'$(Platform)' == 'RML'">
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>

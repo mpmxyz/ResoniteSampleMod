@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SampleMod")]
-[assembly: AssemblyCopyright("MIT")]
+[assembly: AssemblyCopyright("CC0")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

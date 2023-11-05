@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$authors$</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">CC0</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/mpmxyz/ResoniteSampleMod</projectUrl>
+    <description>$description$</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>Resonite</tags>
+  </metadata>
+  
+</package>

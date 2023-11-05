@@ -1,4 +1,5 @@
 ﻿
+using Elements.Core;
 using MonkeyLoader.Configuration;
 using MonkeyLoader.Resonite;
 using System;
@@ -12,9 +13,16 @@ namespace SampleMod
     {
         public override string Name => "SampleMod";
 
-        private readonly SampleModMonkeyConfig LoadedConfig = Config.LoadSection<SampleModMonkeyConfig>();
+        private readonly SampleModMonkeyConfig LoadedConfig;
 
         public bool Enabled => LoadedConfig.Enabled.GetValue();
+
+        public SampleModMonkey() {
+            UniLog.Warning("XXXX");
+
+            Logger.Warn(() => "XXXX");
+            LoadedConfig = Config.LoadSection<SampleModMonkeyConfig>();
+        }
 
         public void DoSomething()
         {
