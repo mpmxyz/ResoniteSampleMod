@@ -1,28 +1,17 @@
 ﻿
-using Elements.Core;
 using MonkeyLoader.Configuration;
 using MonkeyLoader.Resonite;
 using System;
 
 namespace SampleMod
 {
-    /// <summary>
-    /// This mod is an implementation based on the example given in https://github.com/resonite-modding-group/ResoniteModLoader/blob/main/doc/making_mods.md.
-    /// </summary>
     public class SampleModMonkey : ResoniteMonkey<SampleModMonkey>, ISampleMod
     {
         public override string Name => "SampleMod";
 
-        private readonly SampleModMonkeyConfig LoadedConfig;
+        private SampleModMonkeyConfig LoadedConfig;
 
         public bool Enabled => LoadedConfig.Enabled.GetValue();
-
-        public SampleModMonkey() {
-            UniLog.Warning("XXXX");
-
-            Logger.Warn(() => "XXXX");
-            LoadedConfig = Config.LoadSection<SampleModMonkeyConfig>();
-        }
 
         public void DoSomething()
         {
@@ -31,6 +20,7 @@ namespace SampleMod
 
         protected override bool OnEngineReady()
         {
+            LoadedConfig = Config.LoadSection<SampleModMonkeyConfig>();
             Patches.Apply(this);
             return base.OnEngineReady();
         }

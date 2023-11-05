@@ -126,7 +126,7 @@
 		powershell -command "Expand-Archive -Force '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite.zip' '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite'"
 	</PreBuildEvent>
     <PostBuildEvent>
-		nuget pack "$(ProjectDir)\SampleMod.csproj"
+		nuget pack "$(ProjectDir)\SampleMod.csproj" -Properties "Configuration=$(Configuration);Platform=$(Platform)"
 		copy /Y "$(TargetDir)\mpmxyz.SampleMod.1.0.0.nupkg" "$(ResonitePath)\MonkeyLoader\Mods"
 	</PostBuildEvent>
   </PropertyGroup>
