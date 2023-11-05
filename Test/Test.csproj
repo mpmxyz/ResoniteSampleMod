@@ -1,39 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Platform Condition=" '$(Platform)' == '' ">RML</Platform>
     <TargetFramework>net472</TargetFramework>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <Platforms>MonkeyLoader;RML</Platforms>
     <AssemblyTitle>Test</AssemblyTitle>
     <Product>Test</Product>
     <Copyright>Copyright ©  2023</Copyright>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|RML' ">
-    <OutputPath>bin\DebugRML\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|RML' ">
-    <OutputPath>bin\ReleaseRML\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|MonkeyLoader'">
-    <OutputPath>bin\DebugMonkey\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|MonkeyLoader'">
-    <OutputPath>bin\ReleaseMonkey\</OutputPath>
+    <Configurations>Debug RML;Release RML;Debug MonkeyLoader;Release MonkeyLoader</Configurations>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj/**</DefaultItemExcludes>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SampleMod.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="obj\MonkeyLoader\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
@@ -48,5 +33,11 @@
     <Compile Remove="obj\RML\Debug\net472\Test.AssemblyInfo.cs" />
     <Compile Remove="obj\RML\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Remove="obj\RML\Release\net472\Test.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SampleMod.csproj" />
   </ItemGroup>
 </Project>
