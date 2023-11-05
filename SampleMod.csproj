@@ -1,132 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">MonkeyLoader</Platform>
-    <ProjectGuid>{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleMod</RootNamespace>
     <AssemblyName>mpmxyz.SampleMod</AssemblyName>
-    <Authors>mpmxyz</Authors>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-	<Platforms>RML;MonkeyLoader</Platforms>
+    <Authors>$authors$</Authors>
+    <TargetFramework>net472</TargetFramework>
+    <Platforms>MonkeyLoader;RML</Platforms>
+    <AssemblyTitle>SampleMod</AssemblyTitle>
+    <Product>SampleMod</Product>
+    <Description>A sample Resonite Mod</Description>
+    <Copyright>CC0</Copyright>
+    <Version>1.0.0.0</Version>
+    <PackageProjectUrl>https://github.com/mpmxyz/ResoniteSampleMod</PackageProjectUrl>
+    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+    <PackageTags>Resonite</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|RML' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>bin\DebugRML\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|RML' ">
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseRML\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|MonkeyLoader' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>bin\DebugMonkey\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|MonkeyLoader' ">
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseMonkey\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Harmony" Condition="'$(Platform)' == 'RML'">
-      <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Harmony" Condition="'$(Platform)' == 'MonkeyLoader'">
-      <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Elements.Assets">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Assets.dll</HintPath>
-    </Reference>
-    <Reference Include="Elements.Core">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Elements.Quantity">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Quantity.dll</HintPath>
-    </Reference>
-    <Reference Include="FrooxEngine">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="FrooxEngine.Commands">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Commands.dll</HintPath>
-    </Reference>
-    <Reference Include="FrooxEngine.Weaver">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Weaver.dll</HintPath>
-    </Reference>
-    <Reference Include="MonkeyLoader" Condition="'$(Platform)' == 'MonkeyLoader'">
-      <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="ProtoFlux.Core">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ProtoFlux.Nodes.Core">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ProtoFlux.Nodes.FrooxEngine">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.FrooxEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="ProtoFluxBindings">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="ResoniteModLoader" Condition="'$(Platform)' == 'RML'">
-      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="QuantityX">
-      <HintPath>$(ResonitePath)\Resonite_Data\Managed\QuantityX.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Patches.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ISampleMod.cs" />
-    <Compile Include="SampleModMonkey.cs" Condition="'$(Platform)' == 'MonkeyLoader'" />
-    <Compile Include="SampleModRML.cs" Condition="'$(Platform)' == 'RML'" />
-    <Compile Include="TestableCode.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Condition="'$(Platform)' == 'MonkeyLoader'">
-      <Version>1.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Platform)' == 'RML'">
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
-  <Target Name="Clean">
-    <RemoveDir Directories="$(ProjectDir)\MonkeyLoader Gamepacks\**" />
-    <Delete Files="$(ProjectDir)\MonkeyLoader Mods\**" />
-  </Target>
   <PropertyGroup Condition="'$(Platform)' == 'MonkeyLoader'">
     <PreBuildEvent>
 		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(ProjectDir)\MonkeyLoader Gamepacks"
@@ -153,4 +55,82 @@
     <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Assets">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Assets.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Quantity">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Quantity.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Commands">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine.Weaver">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.Weaver.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFlux.Nodes.FrooxEngine">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Nodes.FrooxEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="ProtoFluxBindings">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="ResoniteModLoader">
+      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="QuantityX">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\QuantityX.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'RML'">
+    <Compile Update="SampleModRML.cs" />
+    <Reference Include="Harmony">
+      <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'MonkeyLoader'">
+    <Compile Update="SampleModMonkey.cs" />
+    <Reference Include="Harmony">
+      <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="MonkeyLoader">
+      <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
+    </Reference>
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="1.0.1" />    
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Test\ExampleUnitTest.cs" />
+    <Compile Remove="Test\Properties\AssemblyInfo.cs" />
+    <Compile Remove="obj\MonkeyLoader\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\MonkeyLoader\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\RML\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\RML\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\MonkeyLoader\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\MonkeyLoader\Debug\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\MonkeyLoader\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\MonkeyLoader\Release\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\RML\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\RML\Debug\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\RML\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\RML\Release\net472\SampleMod.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Test\" />
+  </ItemGroup>
 </Project>
