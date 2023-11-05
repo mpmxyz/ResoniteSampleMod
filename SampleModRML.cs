@@ -5,7 +5,7 @@ namespace SampleMod
     /// <summary>
     /// This mod is an implementation based on the example given in https://github.com/resonite-modding-group/ResoniteModLoader/blob/main/doc/making_mods.md.
     /// </summary>
-    public class SampleModRML : ResoniteMod, ISampleMod
+    public class SampleModRML : ResoniteMod//, ISampleMod
     {
         public override string Name => "SampleMod";
         public override string Author => "mpmxyz";
@@ -25,7 +25,7 @@ namespace SampleMod
         {
             Config = GetConfiguration(); //Get this mods' current ModConfiguration
             Config.Save(true); //If you'd like to save the default config values to file
-            Patches.Apply(this);
+            //Patches.Apply(this);
 
             //Various log methods provided by the mod loader, below is an example of how they will look
             //3:14:42 AM.069 ( -1 FPS)  [INFO] [ResoniteModLoader/SampleMod] a regular log

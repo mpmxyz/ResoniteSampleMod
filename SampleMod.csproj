@@ -3,20 +3,21 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' Or '$(Platform)' == 'Any CPU' ">MonkeyLoader</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">MonkeyLoader</Platform>
     <ProjectGuid>{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SampleMod</RootNamespace>
     <AssemblyName>mpmxyz.SampleMod</AssemblyName>
-	<Authors>mpmxyz</Authors>
+    <Authors>mpmxyz</Authors>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+	<Platforms>RML;MonkeyLoader</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|RML' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\DebugRML\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -24,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|RML' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseRML\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -33,7 +34,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|MonkeyLoader' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\DebugMonkey\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -41,7 +42,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|MonkeyLoader' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\ReleaseMonkey\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -79,9 +80,6 @@
     <Reference Include="MonkeyLoader" Condition="'$(Platform)' == 'MonkeyLoader'">
       <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
     </Reference>
-    <Reference Include="MonkeyLoader.Resonite.Integration" Condition="'$(Platform)' == 'MonkeyLoader'">
-      <HintPath>$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite\lib\net462\MonkeyLoader.Resonite.Integration.dll</HintPath>
-    </Reference>
     <Reference Include="ProtoFlux.Core">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFlux.Core.dll</HintPath>
     </Reference>
@@ -116,23 +114,33 @@
     <Compile Include="SampleModRML.cs" Condition="'$(Platform)' == 'RML'" />
     <Compile Include="TestableCode.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Condition="'$(Platform)' == 'MonkeyLoader'">
+      <Version>1.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Platform)' == 'RML'">
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(ResonitePath)\rml_mods\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
+  <Target Name="Clean">
+    <RemoveDir Directories="$(ProjectDir)\MonkeyLoader Gamepacks\**" />
+    <Delete Files="$(ProjectDir)\MonkeyLoader Mods\**" />
+  </Target>
   <PropertyGroup Condition="'$(Platform)' == 'MonkeyLoader'">
     <PreBuildEvent>
-		copy /Y "$(ResonitePath)\MonkeyLoader\GamePacks\MonkeyLoader.GamePacks.Resonite.nupkg" "$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite.zip"
-		powershell -command "Expand-Archive -Force '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite.zip' '$(ProjectDir)\UnpackedGamePack\MonkeyLoader.GamePacks.Resonite'"
+		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(ProjectDir)\MonkeyLoader Gamepacks"
+		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(ProjectDir)\MonkeyLoader Mods"
 	</PreBuildEvent>
     <PostBuildEvent>
 		nuget pack "$(ProjectDir)\SampleMod.csproj" -Properties "Configuration=$(Configuration);Platform=$(Platform)"
-		copy /Y "$(TargetDir)\mpmxyz.SampleMod.1.0.0.nupkg" "$(ResonitePath)\MonkeyLoader\Mods"
+		echo $(VersionPrefix) $(AssemblyName) $(AssemblyVersion) $(FileVersion) $(InformationalVersion) $(VersionSuffix) $(Version)
+		copy /Y "$(TargetDir)\$(AssemblyName).$(PackageVersion).nupkg" "$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg"
 	</PostBuildEvent>
   </PropertyGroup>
-	<PropertyGroup>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	</PropertyGroup>
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)' == 'RML'">
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
