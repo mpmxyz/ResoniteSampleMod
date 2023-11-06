@@ -18,8 +18,28 @@ jobs:
       with:
         repository: mpmxyz/ResoniteFiles
         token: ${{ secrets.resonite_clone_token }}
-        path: 'Download'
-    - uses: actions/checkout@v4
+        path: Download
+    - name: Prepare Directories
+      run: |
+        mkdir -p Download/Resonite/rml_libs
+        mkdir -p Download/Resonite/Libraries       
+    - name: Fetch MonkeyLoader
+      uses: schmiddim/action-wget-unzip@v2
+      with:
+        url: https://github.com/Banane9/MonkeyLoader/releases/download/v0.1.0-alpha/MonkeyLoader-0.1.0-alpha.zip
+        destination: Download/Resonite
+    - name: Fetch ResoniteModLoader
+      uses: duhow/download-github-release-assets@v1.1.1
+      with:
+        repository: resonite-modding-group/ResoniteModLoader
+        target: RML/
+        files: "*.dll"
+    - name: Move ResoniteModLoader Files
+      run: |
+        mv RML/0Harmony.dll Download/Resonite/rml_libs/0Harmony.dll
+        mv RML/ResoniteModLoader.dll Download/Resonite/Libraries/ResoniteModLoader.dll
+    - name: Fetch Repository
+      uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
