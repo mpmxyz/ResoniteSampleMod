@@ -59,6 +59,13 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Debug Resonite directory
+      run: |
+        ls $ResonitePath
+        echo "!"
+        ls $ResonitePath/MonkeyLoader
+        echo "!"
+        ls $ResonitePath/MonkeyLoader/GamePacks
     - name: Move MonkeyLoader GamePack
       run: |
         nuget init "$ResonitePath/MonkeyLoader/GamePacks" "MonkeyLoader GamePacks"
