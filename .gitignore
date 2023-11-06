@@ -5,3 +5,6 @@
 /packages
 /Test/obj
 /Test/bin
+/*.nupkg
+/MonkeyLoader Mods/*
+/MonkeyLoader Gamepacks/*

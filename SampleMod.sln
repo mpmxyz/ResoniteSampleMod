@@ -3,34 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMod", "SampleMod.csproj", "{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMod", "SampleMod.csproj", "{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|MonkeyLoader = Debug|MonkeyLoader
-		Debug|RML = Debug|RML
-		Release|MonkeyLoader = Release|MonkeyLoader
-		Release|RML = Release|RML
+		Debug MonkeyLoader|AnyCPU = Debug MonkeyLoader|AnyCPU
+		Debug RML|AnyCPU = Debug RML|AnyCPU
+		Release MonkeyLoader|AnyCPU = Release MonkeyLoader|AnyCPU
+		Release RML|AnyCPU = Release RML|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|MonkeyLoader.ActiveCfg = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|MonkeyLoader.Build.0 = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|RML.ActiveCfg = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|RML.Build.0 = Debug|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|MonkeyLoader.ActiveCfg = Release|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|MonkeyLoader.Build.0 = Release|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|RML.ActiveCfg = Release|Any CPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|RML.Build.0 = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|MonkeyLoader.ActiveCfg = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|MonkeyLoader.Build.0 = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|RML.ActiveCfg = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|RML.Build.0 = Debug|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|MonkeyLoader.ActiveCfg = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|MonkeyLoader.Build.0 = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|RML.ActiveCfg = Release|Any CPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|RML.Build.0 = Release|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug MonkeyLoader|AnyCPU.ActiveCfg = Debug MonkeyLoader|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug MonkeyLoader|AnyCPU.Build.0 = Debug MonkeyLoader|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug RML|AnyCPU.ActiveCfg = Debug RML|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug RML|AnyCPU.Build.0 = Debug RML|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release MonkeyLoader|AnyCPU.ActiveCfg = Release MonkeyLoader|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release MonkeyLoader|AnyCPU.Build.0 = Release MonkeyLoader|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release RML|AnyCPU.ActiveCfg = Release RML|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release RML|AnyCPU.Build.0 = Release RML|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug MonkeyLoader|AnyCPU.ActiveCfg = Debug MonkeyLoader|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug MonkeyLoader|AnyCPU.Build.0 = Debug MonkeyLoader|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug RML|AnyCPU.ActiveCfg = Debug RML|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug RML|AnyCPU.Build.0 = Debug RML|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release MonkeyLoader|AnyCPU.ActiveCfg = Release MonkeyLoader|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release MonkeyLoader|AnyCPU.Build.0 = Release MonkeyLoader|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release RML|AnyCPU.ActiveCfg = Release RML|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release RML|AnyCPU.Build.0 = Release RML|AnyCPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
