@@ -9,17 +9,19 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  ResonitePath: "../Download/Resonite"
+  ResonitePath: "Download/Resonite"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Fetch Repository
+      uses: actions/checkout@v4
     - name: Fetch Resonite
       uses: actions/checkout@v4
       with:
         repository: mpmxyz/ResoniteFiles
         token: ${{ secrets.resonite_clone_token }}
-        path: Download
+        path: ${{ env.ResonitePath }}/..
     - name: Prepare Directories
       run: |
         mkdir -p "$ResonitePath/rml_libs"
@@ -57,8 +59,6 @@ jobs:
       run: |
         mv RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
         mv RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
-    - name: Fetch Repository
-      uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
