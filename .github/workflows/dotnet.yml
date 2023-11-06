@@ -32,6 +32,7 @@ jobs:
       uses: duhow/download-github-release-assets@v1.1.1
       with:
         repository: resonite-modding-group/ResoniteModLoader
+        release-id: latest
         target: RML/
         files: "*.dll"
     - name: Move ResoniteModLoader Files
