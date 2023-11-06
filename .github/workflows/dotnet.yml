@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  ResonitePath: ../Download/Resonite
+  ResonitePath: "../Download/Resonite"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,7 +26,15 @@ jobs:
         mkdir -p "$ResonitePath/Libraries"
         mkdir "MonkeyLoader GamePacks"
         mkdir "MonkeyLoader Mods"
+        echo $ResonitePath
         ls
+        echo "!"
+        ls ..
+        echo "!"
+        ls ../Download
+        echo "!"
+        ls ../Download/Resonite
+        echo "!"
         ls $ResonitePath
     - name: Fetch MonkeyLoader
       uses: schmiddim/action-wget-unzip@v2
