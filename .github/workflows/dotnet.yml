@@ -33,10 +33,6 @@ jobs:
         echo "!"
         ls ..
         echo "!"
-        ls ../Download
-        echo "!"
-        ls ../Download/Resonite
-        echo "!"
         ls $ResonitePath
     - name: Debug Output
       run: |
@@ -47,7 +43,7 @@ jobs:
       uses: schmiddim/action-wget-unzip@v2
       with:
         url: https://github.com/Banane9/MonkeyLoader/releases/download/v0.1.0-alpha/MonkeyLoader-0.1.0-alpha.zip
-        destination: /home/runner/work/ResoniteSampleMod/Download/Resonite
+        destination: ${{ env.ResonitePath }}
     - name: Fetch ResoniteModLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
