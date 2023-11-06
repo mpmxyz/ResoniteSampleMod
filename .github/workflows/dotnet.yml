@@ -32,7 +32,7 @@ jobs:
       uses: duhow/download-github-release-assets@v1.1.1
       with:
         repository: Banane9/MonkeyLoader
-        release-id: latest
+        tag: v0.1.0-alpha
         target: MonkeyLoader/
         files: "MonkeyLoader-0.1.0-alpha.zip"
     - name: Fetch ResoniteModLoader
