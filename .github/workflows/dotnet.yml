@@ -22,7 +22,9 @@ jobs:
     - name: Prepare Directories
       run: |
         mkdir -p Download/Resonite/rml_libs
-        mkdir -p Download/Resonite/Libraries       
+        mkdir -p Download/Resonite/Libraries
+        mkdir "MonkeyLoader GamePacks"
+        mkdir "MonkeyLoader Mods"
     - name: Fetch MonkeyLoader
       uses: schmiddim/action-wget-unzip@v2
       with:
