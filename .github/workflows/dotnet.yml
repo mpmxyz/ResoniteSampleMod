@@ -10,6 +10,7 @@ on:
     branches: [ "main" ]
 env:
   ResonitePath: "Download/Resonite"
+  GITHUB: "true"
 jobs:
   build:
     runs-on: ubuntu-latest
