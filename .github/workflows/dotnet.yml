@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  ResonitePath: Download/Resonite
+  ResonitePath: ../Download/Resonite
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,16 +22,16 @@ jobs:
         path: Download
     - name: Prepare Directories
       run: |
-        mkdir -p Download/Resonite/rml_libs
-        mkdir -p Download/Resonite/Libraries
-        mkdir "MonkeyLoader GamePacks"
-        mkdir "MonkeyLoader Mods"
+        mkdir -p "$ResonitePath/Download/Resonite/rml_libs"
+        mkdir -p "$ResonitePath/Download/Resonite/Libraries"
+        mkdir "$ResonitePath/MonkeyLoader GamePacks"
+        mkdir "$ResonitePath/MonkeyLoader Mods"
         ls
     - name: Fetch MonkeyLoader
       uses: schmiddim/action-wget-unzip@v2
       with:
         url: https://github.com/Banane9/MonkeyLoader/releases/download/v0.1.0-alpha/MonkeyLoader-0.1.0-alpha.zip
-        destination: Download/Resonite
+        destination: ${{ Env.ResonitePath }}/Download/Resonite
     - name: Fetch ResoniteModLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
@@ -41,8 +41,8 @@ jobs:
         files: "*.dll"
     - name: Move ResoniteModLoader Files
       run: |
-        mv RML/0Harmony.dll Download/Resonite/rml_libs/0Harmony.dll
-        mv RML/ResoniteModLoader.dll Download/Resonite/Libraries/ResoniteModLoader.dll
+        mv RML/0Harmony.dll "$ResonitePath/Download/Resonite/rml_libs/0Harmony.dll"
+        mv RML/ResoniteModLoader.dll "$ResonitePath/Download/Resonite/Libraries/ResoniteModLoader.dll"
     - name: Fetch Repository
       uses: actions/checkout@v4
     - name: Setup .NET
