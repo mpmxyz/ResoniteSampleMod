@@ -12,8 +12,7 @@
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
     <Configurations>Debug RML;Release RML;Debug MonkeyLoader;Release MonkeyLoader</Configurations>
-	  <InitialTargets>$(InitialTargets);log</InitialTargets>
-	  <BaseOutputPath>bin\</BaseOutputPath>
+    <BaseOutputPath>bin\</BaseOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
 	<PostBuildEvent>copy /Y "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"</PostBuildEvent>
@@ -107,19 +106,19 @@
     <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="1.0.1" />    
   </ItemGroup>
   <ItemGroup>
-	  <InternalsVisibleTo Include="Test" />
+    <InternalsVisibleTo Include="Test" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="SampleModRML.cs" Condition="'$(Configuration)' != 'Debug RML' And '$(Configuration)' != 'Release RML'" />
     <Compile Remove="SampleModMonkey.cs" Condition="'$(Configuration)' != 'Debug MonkeyLoader' And '$(Configuration)' != 'Release MonkeyLoader'" />
-	  <Compile Remove="obj\Debug RML\net472\SampleMod.AssemblyInfo.cs" />
-	  <Compile Remove="obj\Debug RML\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-	  <Compile Remove="obj\Debug MonkeyLoader\net472\SampleMod.AssemblyInfo.cs" />
-	  <Compile Remove="obj\Debug MonkeyLoader\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-	  <Compile Remove="obj\Release RML\net472\SampleMod.AssemblyInfo.cs" />
-	  <Compile Remove="obj\Release RML\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-	  <Compile Remove="obj\Release MonkeyLoader\net472\SampleMod.AssemblyInfo.cs" />
-	  <Compile Remove="obj\Release MonkeyLoader\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Debug RML\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\Debug RML\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Debug MonkeyLoader\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\Debug MonkeyLoader\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Release RML\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\Release RML\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\Release MonkeyLoader\net472\SampleMod.AssemblyInfo.cs" />
+    <Compile Remove="obj\Release MonkeyLoader\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
   </ItemGroup>
   <ItemGroup>
 	  <Folder Remove="Test" />
