@@ -40,7 +40,7 @@ jobs:
       uses: schmiddim/action-wget-unzip@v2
       with:
         url: https://github.com/Banane9/MonkeyLoader/releases/download/v0.1.0-alpha/MonkeyLoader-0.1.0-alpha.zip
-        destination: ${{ Env.ResonitePath }}
+        destination: /home/runner/work/ResoniteSampleMod/Download/Resonite
     - name: Fetch ResoniteModLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
