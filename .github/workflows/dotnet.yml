@@ -5,7 +5,7 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "workflow-dev" ]
   pull_request:
     branches: [ "main" ]
 
@@ -25,6 +25,7 @@ jobs:
         mkdir -p Download/Resonite/Libraries
         mkdir "MonkeyLoader GamePacks"
         mkdir "MonkeyLoader Mods"
+        echo $PWD
     - name: Fetch MonkeyLoader
       uses: schmiddim/action-wget-unzip@v2
       with:
