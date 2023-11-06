@@ -36,6 +36,11 @@ jobs:
         ls ../Download/Resonite
         echo "!"
         ls $ResonitePath
+    - name: Debug Output
+      run: |
+        ls
+        echo "!"
+        ls $ResonitePath
     - name: Fetch MonkeyLoader
       uses: schmiddim/action-wget-unzip@v2
       with:
