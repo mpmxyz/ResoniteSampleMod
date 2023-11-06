@@ -28,22 +28,13 @@ jobs:
         mkdir -p "$ResonitePath/Libraries"
         mkdir "MonkeyLoader GamePacks"
         mkdir "MonkeyLoader Mods"
-        echo $ResonitePath
-        ls
-        echo "!"
-        ls ..
-        echo "!"
-        ls $ResonitePath
-    - name: Debug Output
-      run: |
-        ls
-        echo "!"
-        ls $ResonitePath
-    - name: Fetch MonkeyLoader
-      uses: schmiddim/action-wget-unzip@v2
+    - name: Fetch MonkeyLoder
+      uses: duhow/download-github-release-assets@v1.1.1
       with:
-        url: https://github.com/Banane9/MonkeyLoader/releases/download/v0.1.0-alpha/MonkeyLoader-0.1.0-alpha.zip
-        destination: ${{ env.ResonitePath }}
+        repository: Banane9/MonkeyLoader
+        release-id: latest
+        target: MonkeyLoader/
+        files: "MonkeyLoader-0.1.0-alpha.zip"
     - name: Fetch ResoniteModLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
@@ -55,6 +46,9 @@ jobs:
       run: |
         mv RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
         mv RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
+    - name: Move MonkeyLoader Files
+      run: |
+        unzip -o MonkeyLoader/MonkeyLoader-0.1.0-alpha.zip -d "$ResonitePath"
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
