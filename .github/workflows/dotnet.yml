@@ -68,7 +68,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -Configuration "Release MonkeyLoader"
+      run: dotnet build --no-restore --configuration "Release MonkeyLoader"
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
     - name: LS
