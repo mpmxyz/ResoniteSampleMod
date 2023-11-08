@@ -35,11 +35,11 @@ jobs:
       run: |
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
-    - name: Fetch latest MonkeyLoader
+    - name: Fetch MonkeyLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
         repository: Banane9/MonkeyLoader
-        release-id: latest
+        tag: v0.1.0-alpha
         target: MonkeyLoader/
         files: "MonkeyLoader*.zip"
     - name: Fetch latest ResoniteModLoader
