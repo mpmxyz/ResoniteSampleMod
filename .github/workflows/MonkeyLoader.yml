@@ -13,7 +13,7 @@ env:
   GITHUB: "true"
   BUILD_VERSION: ${{ github.ref_name }}
   PACKAGE_NAME: SampleMod
-  PACKAGE_FILE: bin/Release MonkeyLoader/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
+  PACKAGE_FILE: bin/Release MonkeyLoader/SampleMod.${{ env.BUILD_VERSION }}.nupkg
   NUGET_PUBLISH_TARGET: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
 jobs:
   build:
@@ -35,14 +35,14 @@ jobs:
       run: |
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
-    - name: Fetch MonkeyLoader
+    - name: Fetch latest MonkeyLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
         repository: Banane9/MonkeyLoader
-        tag: v0.1.0-alpha
+        release-id: latest
         target: MonkeyLoader/
-        files: "MonkeyLoader-0.1.0-alpha.zip"
-    - name: Fetch ResoniteModLoader
+        files: "MonkeyLoader*.zip"
+    - name: Fetch latest ResoniteModLoader
       uses: duhow/download-github-release-assets@v1.1.1
       with:
         repository: resonite-modding-group/ResoniteModLoader
@@ -55,7 +55,7 @@ jobs:
         mv RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Move MonkeyLoader Files
       run: |
-        unzip -o MonkeyLoader/MonkeyLoader-0.1.0-alpha.zip -d "$ResonitePath"
+        unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -72,7 +72,7 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: SampleMod.nupkg
+        name: ${{ env.PACKAGE_NAME }}.nupkg
         path: ${{ env.PACKAGE_FILE }}
     - name: Add Repo Owner NuGet Package Source
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name publish_target "${{ env.PUBLISH_TARGET }}"
