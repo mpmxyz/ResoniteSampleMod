@@ -79,7 +79,7 @@ jobs:
         path: ${{ env.PACKAGE_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
     - name: Add Repo Owner NuGet Package Source
       if: ${{ env.IS_RELEASE }}
-      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name publish_target "${{ env.PUBLISH_TARGET }}"
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name publish_target "${{ env.NUGET_PUBLISH_TARGET }}"
     - name: Publish to NuGet Feed
       if: ${{ env.IS_RELEASE }}
       run: dotnet nuget push "${{ env.PACKAGE_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg"  --api-key ${{ secrets.GITHUB_TOKEN }} --source "publish_target"
