@@ -14,7 +14,8 @@ env:
   GITHUB: "true"
   IS_RELEASE: ${{ github.ref_type == 'tag' && startsWith(github.ref_name, 'v') }}
   BUILD_VERSION: 1.0.0
-  PACKAGE_NAME: SampleMod
+  DOWNLOAD_NAME: SampleMod
+  PACKAGE_NAME: mpmxyz.SampleMod
   PACKAGE_FOLDER: bin/Release MonkeyLoader
   NUGET_PUBLISH_TARGET: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
 jobs:
@@ -71,11 +72,13 @@ jobs:
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
 #    - name: Test
 #      run: dotnet test --no-build --verbosity normal
+    - name: Debug
+      run: echo "!$IS_RELEASE!"
     - name: Upload a Build Artifact
       if: ${{ env.IS_RELEASE }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.PACKAGE_NAME }}.nupkg
+        name: ${{ env.DOWNLOAD_NAME }}.nupkg
         path: ${{ env.PACKAGE_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
     - name: Add Repo Owner NuGet Package Source
       if: ${{ env.IS_RELEASE }}
