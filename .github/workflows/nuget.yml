@@ -7,7 +7,7 @@ on:
     
 env:
   NUGET_PUBLISH_TARGET: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
-  TEMP_NUGET_FOLDER: "nupkgs/"
+  TEMP_NUGET_FOLDER: "nupkgs"
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -17,9 +17,9 @@ jobs:
       with:
         repository: ${{ github.repository }}
         tag: ${{ github.ref_name }}
-        target: ${{ env.TEMP_NUGET_FOLDER }}
+        target: ${{ env.TEMP_NUGET_FOLDER }}/
         files: "*.nupkg"
     - name: Add repo owner's NuGet package source
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name "publish_target" "${{ env.NUGET_PUBLISH_TARGET }}"
     - name: Publish to NuGet feed
-      run: dotnet nuget push "${{ env.TEMP_NUGET_FOLDER }}/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "publish_target"
+      run: dotnet nuget push "${{ env.TEMP_NUGET_FOLDER }}/**.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "publish_target"
