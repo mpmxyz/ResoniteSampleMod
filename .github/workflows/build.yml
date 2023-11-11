@@ -16,12 +16,13 @@ env:
   BUILD_VERSION: 1.0.0
   DOWNLOAD_NAME: SampleMod
   PACKAGE_NAME: mpmxyz.SampleMod
-  PACKAGE_FOLDER: bin/Release MonkeyLoader
+  MONKEY_OUTPUT_FOLDER: bin/Release MonkeyLoader
+  RML_OUTPUT_FOLDER: bin/Release RML
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Fetch Repository
+    - name: Fetch repository
       uses: actions/checkout@v4
     - name: Fetch latest Resonite
       uses: actions/checkout@v4
@@ -29,11 +30,15 @@ jobs:
         repository: mpmxyz/ResoniteFiles
         token: ${{ secrets.resonite_clone_token }}
         path: ${{ env.ResonitePath }}/..
-    - name: Prepare MonkeyLoader Directories
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Prepare MonkeyLoader directories
       run: |
-        mkdir "MonkeyLoader GamePacks"
-        mkdir "MonkeyLoader Mods"
-    - name: Prepare RML Directories
+        mkdir -p "MonkeyLoader GamePacks"
+        mkdir -p "MonkeyLoader Mods"
+    - name: Prepare RML directories
       run: |
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
@@ -51,31 +56,38 @@ jobs:
         release-id: latest
         target: RML/
         files: "*.dll"
-    - name: Move ResoniteModLoader Files
+    - name: Move files (ResoniteModLoader)
       run: |
         mv RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
         mv RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
-    - name: Move MonkeyLoader Files
+    - name: Move files (MonkeyLoader)
       run: |
         unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
-    - name: Move MonkeyLoader GamePack
-      run: |
         nuget init "$ResonitePath/MonkeyLoader/GamePacks" "MonkeyLoader GamePacks"
     - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
+      run: |
+        dotnet restore
+    - name: Build (MonkeyLoader)
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
-#    - name: Test
-#      run: dotnet test --no-build --verbosity normal
-    - name: Debug
-      run: echo "!$IS_RELEASE!"
-    - name: Upload a Build Artifact
+    - name: Build (ResoniteModLoader)
+      run: |
+        dotnet build --no-restore --configuration "Release RML"
+        cd "${{ RML_OUTPUT_FOLDER }}"
+        mkdir -p "archive"
+        cp TODO TODO
+#    - name: Test (MonkeyLoader)
+#      run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
+#    - name: Test (ResoniteModLoader)
+#      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
+    - name: Upload build artifacts (MonkeyLoader)
       if: ${{ env.IS_RELEASE }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.DOWNLOAD_NAME }}.nupkg
-        path: ${{ env.PACKAGE_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
+        name: ${{ env.DOWNLOAD_NAME }}-MonkeyLoader.nupkg
+        path: ${{ env.MONKEY_OUTPUT_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
+    - name: Upload build artifacts (ResoniteModLoader)
+      if: ${{ env.IS_RELEASE }}
+      uses: actions/upload-artifact@v3.1.3
+      with: 
+        name: ${{ env.DOWNLOAD_NAME }}-ResoniteModLoader
+        path: ${{ env.RML_OUTPUT_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
