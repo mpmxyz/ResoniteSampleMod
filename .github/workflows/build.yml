@@ -75,6 +75,7 @@ jobs:
         dotnet build --no-restore --configuration "Release RML"
         cd "${{ env.RML_OUTPUT_FOLDER }}"
         mkdir -p "archive/rml_mods"
+        ls
         cp "**/${{ env.PACKAGE_NAME }}.dll" "archive/rml_mods/${{ env.PACKAGE_NAME }}.dll"
 #        mkdir -p "archive/rml_libs"
 #    - name: Test (MonkeyLoader)
