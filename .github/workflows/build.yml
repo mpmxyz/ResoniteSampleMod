@@ -18,7 +18,7 @@ env:
   DOWNLOAD_NAME: SampleMod
   PACKAGE_NAME: mpmxyz.SampleMod
   MONKEY_OUTPUT_FOLDER: bin/Release MonkeyLoader
-  RML_OUTPUT_FOLDER: bin/Release RML
+  RML_OUTPUT_FOLDER: bin/Release RML/net472
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
         cd "${{ env.RML_OUTPUT_FOLDER }}"
         mkdir -p "archive/rml_mods"
         ls net472
-        cp "*/${{ env.PACKAGE_NAME }}.dll" "archive/rml_mods/${{ env.PACKAGE_NAME }}.dll"
+        cp "${{ env.PACKAGE_NAME }}.dll" "archive/rml_mods/${{ env.PACKAGE_NAME }}.dll"
 #        mkdir -p "archive/rml_libs"
 #    - name: Test (MonkeyLoader)
 #      run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
