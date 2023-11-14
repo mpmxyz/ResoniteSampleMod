@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project InitialTargets="CheckReleaseVersion" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>mpmxyz.SampleMod</AssemblyName>
     <Authors>mpmxyz</Authors>
@@ -13,18 +13,37 @@
     <PackageTags>Resonite</PackageTags>
     <Configurations>Debug RML;Release RML;Debug MonkeyLoader;Release MonkeyLoader</Configurations>
     <BaseOutputPath>bin\</BaseOutputPath>
+    <IsRML>false</IsRML>
+    <IsMonkeyLoader>false</IsMonkeyLoader>
   </PropertyGroup>
+  <Target Name="CheckReleaseVersion">
+	  <Error
+		  Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)"
+		  Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))
+Ensure that the versions in the csproj file and in your release flow trigger match!"/>
+  </Target>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
-    <PostBuildEvent Condition="$(GITHUB) == ''">copy /Y "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"</PostBuildEvent>
+    <IsRML>true</IsRML>
+    <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+      copy /Y "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"
+	</PostBuildEvent>
+    <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+      cp -f "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"
+	</PostBuildEvent>
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug MonkeyLoader' Or '$(Configuration)' == 'Release MonkeyLoader'">
-    <PreBuildEvent Condition="$(GITHUB) == ''">
+    <IsMonkeyLoader>true</IsMonkeyLoader>
+    <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
 		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(ProjectDir)\MonkeyLoader Gamepacks"
 		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(ProjectDir)\MonkeyLoader Mods"
+	</PreBuildEvent>
+    <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+		nuget init "$(ResonitePath)/MonkeyLoader/GamePacks" "$(ProjectDir)/MonkeyLoader Gamepacks"
+		nuget init "$(ResonitePath)/MonkeyLoader/Mods" "$(ProjectDir)/MonkeyLoader Mods"
 	</PreBuildEvent>
 	<IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -33,9 +52,14 @@
     <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
-	<Target Name="MovePack" AfterTargets="Pack" Condition="$(GITHUB) == ''">
-		<Exec Command="copy /Y &quot;$(OutputPath)\..\$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg&quot;"/>
-	</Target>
+  <Target Name="MovePack" AfterTargets="Pack" Condition="$(IsMonkeyLoader)">
+    <Exec
+      Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+      Command="copy /Y &quot;$(OutputPath)\..\$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg&quot;"/>
+    <Exec
+      Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+      Command="cp -f &quot;$(OutputPath)/../$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)/MonkeyLoader/Mods/$(AssemblyName).nupkg&quot;"/>
+  </Target>
   <PropertyGroup>
     <DefaultItemExcludes>$(DefaultItemExcludes);obj/**</DefaultItemExcludes>
   </PropertyGroup>
@@ -90,12 +114,12 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
+  <ItemGroup Condition="$(IsRML)">
     <Reference Include="Harmony">
       <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug MonkeyLoader' Or '$(Configuration)' == 'Release MonkeyLoader'">
+  <ItemGroup Condition="$(IsMonkeyLoader)">
     <Compile Update="SampleModMonkey.cs" />
     <Reference Include="Harmony">
       <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
@@ -109,8 +133,8 @@
     <InternalsVisibleTo Include="Test" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="SampleModRML.cs" Condition="'$(Configuration)' != 'Debug RML' And '$(Configuration)' != 'Release RML'" />
-    <Compile Remove="SampleModMonkey.cs" Condition="'$(Configuration)' != 'Debug MonkeyLoader' And '$(Configuration)' != 'Release MonkeyLoader'" />
+    <Compile Remove="SampleModRML.cs" Condition="!$(IsRML)" />
+    <Compile Remove="SampleModMonkey.cs" Condition="!$(IsMonkeyLoader)" />
     <Compile Remove="obj\Debug RML\net472\SampleMod.AssemblyInfo.cs" />
     <Compile Remove="obj\Debug RML\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Remove="obj\Debug MonkeyLoader\net472\SampleMod.AssemblyInfo.cs" />
