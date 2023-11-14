@@ -6,15 +6,20 @@ name: MonkeyLoader.NET
 on:
   push:
   pull_request:
+  workflow_call:
+    inputs:
+      RELEASE_VERSION:
+        description: "Release Version"
+        type: string
+        required: false
+        default: ""
 env:
   ResonitePath: "Download/Resonite"
   GITHUB: "true"
-  BUILD_VERSION: 1.0.0
-  #TODO: remove BUILD_VERSION from here, make it RELEASE_VERSION that is cross-checked with build file?
-  DOWNLOAD_NAME: SampleMod
-  PACKAGE_NAME: mpmxyz.SampleMod
-  MONKEY_OUTPUT_FOLDER: bin/Release MonkeyLoader
-  RML_OUTPUT_FOLDER: bin/Release RML/net472
+  ARTIFACT_NAME: SampleMod
+  OUTPUT_NAME: mpmxyz.SampleMod
+  OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
+  OUTPUT_FOLDER_RML: bin/Release RML/net472
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -69,23 +74,23 @@ jobs:
     - name: Build (ResoniteModLoader)
       run: |
         dotnet build --no-restore --configuration "Release RML"
-        cd "${{ env.RML_OUTPUT_FOLDER }}"
+        cd "${{ env.OUTPUT_FOLDER_RML }}"
         mkdir -p "archive/rml_mods"
-        cp "${{ env.PACKAGE_NAME }}.dll" "archive/rml_mods/${{ env.PACKAGE_NAME }}.dll"
+        cp "${{ env.OUTPUT_NAME }}.dll" "archive/rml_mods/${{ env.OUTPUT_NAME }}.dll"
 #        mkdir -p "archive/rml_libs"
-#    - name: Test (MonkeyLoader)
-#      run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
-#    - name: Test (ResoniteModLoader)
-#      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
+    - name: Test (MonkeyLoader)
+      run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
+    - name: Test (ResoniteModLoader)
+      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
     - name: Upload build artifacts (MonkeyLoader)
-      if: ${{ env.UPLOAD_ARTIFACTS }}
+      if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.DOWNLOAD_NAME }}-MonkeyLoader.nupkg
-        path: ${{ env.MONKEY_OUTPUT_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
+        name: ${{ env.ARTIFACT_NAME }}-MonkeyLoader.nupkg
+        path: ${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.OUTPUT_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg
     - name: Upload build artifacts (ResoniteModLoader)
-      if: ${{ env.UPLOAD_ARTIFACTS }}
+      if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.DOWNLOAD_NAME }}-ResoniteModLoader
-        path: ${{ env.RML_OUTPUT_FOLDER }}/archive/
+        name: ${{ env.ARTIFACT_NAME }}-ResoniteModLoader
+        path: ${{ env.OUTPUT_FOLDER_RML }}/archive/
