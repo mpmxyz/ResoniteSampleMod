@@ -15,7 +15,6 @@ on:
         default: ""
 env:
   ResonitePath: "Download/Resonite"
-  ProjectDir: "."
   GITHUB: "true"
   ARTIFACT_NAME: SampleMod
   OUTPUT_NAME: mpmxyz.SampleMod
@@ -41,6 +40,8 @@ jobs:
       run: |
         mkdir -p "MonkeyLoader GamePacks"
         mkdir -p "MonkeyLoader Mods"
+        mkdir -p "$ResonitePath/MonkeyLoader/GamePacks"
+        mkdir -p "$ResonitePath/MonkeyLoader/Mods"
     - name: Prepare RML directories
       run: |
         mkdir -p "$ResonitePath/rml_libs"
