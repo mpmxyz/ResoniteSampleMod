@@ -5,16 +5,12 @@ name: MonkeyLoader.NET
 
 on:
   push:
-    branches: [ "main", "workflow-dev" ]
-    tags: 'v*'
   pull_request:
-    branches: [ "main" ]
 env:
   ResonitePath: "Download/Resonite"
   GITHUB: "true"
-  #TODO: adjust to only react to tags without release OR make it a manual trigger
-  CREATE_RELEASE_DRAFT: ${{ github.ref_type == 'tag' && startsWith(github.ref_name, 'v') }}
   BUILD_VERSION: 1.0.0
+  #TODO: remove BUILD_VERSION from here, make it RELEASE_VERSION that is cross-checked with build file?
   DOWNLOAD_NAME: SampleMod
   PACKAGE_NAME: mpmxyz.SampleMod
   MONKEY_OUTPUT_FOLDER: bin/Release MonkeyLoader
@@ -82,17 +78,14 @@ jobs:
 #    - name: Test (ResoniteModLoader)
 #      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
     - name: Upload build artifacts (MonkeyLoader)
-      if: ${{ env.CREATE_RELEASE_DRAFT }}
+      if: ${{ env.UPLOAD_ARTIFACTS }}
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: ${{ env.DOWNLOAD_NAME }}-MonkeyLoader.nupkg
         path: ${{ env.MONKEY_OUTPUT_FOLDER }}/${{ env.PACKAGE_NAME }}.${{ env.BUILD_VERSION }}.nupkg
     - name: Upload build artifacts (ResoniteModLoader)
-      if: ${{ env.CREATE_RELEASE_DRAFT }}
+      if: ${{ env.UPLOAD_ARTIFACTS }}
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: ${{ env.DOWNLOAD_NAME }}-ResoniteModLoader
         path: ${{ env.RML_OUTPUT_FOLDER }}/archive/
-    - name: Create release draft
-      if: ${{ env.CREATE_RELEASE_DRAFT }}
-      run: echo "TODO"
