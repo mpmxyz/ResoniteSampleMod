@@ -15,6 +15,7 @@ on:
         default: ""
 env:
   ResonitePath: "Download/Resonite"
+  ProjectDir: "."
   GITHUB: "true"
   ARTIFACT_NAME: SampleMod
   OUTPUT_NAME: mpmxyz.SampleMod
