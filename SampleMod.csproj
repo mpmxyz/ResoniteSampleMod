@@ -15,14 +15,14 @@
     <BaseOutputPath>bin\</BaseOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
-	<PostBuildEvent>copy /Y "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"</PostBuildEvent>
+    <PostBuildEvent Condition="$(GITHUB) == ''">copy /Y "$(AssemblyName).dll" "%ResonitePath%\rml_mods\"</PostBuildEvent>
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug MonkeyLoader' Or '$(Configuration)' == 'Release MonkeyLoader'">
-    <PreBuildEvent>
+    <PreBuildEvent Condition="$(GITHUB) == ''">
 		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(ProjectDir)\MonkeyLoader Gamepacks"
 		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(ProjectDir)\MonkeyLoader Mods"
 	</PreBuildEvent>
@@ -33,7 +33,7 @@
     <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
-	<Target Name="MovePack" AfterTargets="Pack">
+	<Target Name="MovePack" AfterTargets="Pack" Condition="$(GITHUB) == ''">
 		<Exec Command="copy /Y &quot;$(OutputPath)\..\$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg&quot;"/>
 	</Target>
   <PropertyGroup>
