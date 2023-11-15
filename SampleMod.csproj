@@ -42,6 +42,8 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
 		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(ProjectDir)\MonkeyLoader Mods"
 	</PreBuildEvent>
     <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+		echo $PWD
+		ls
 		nuget init "$(ResonitePath)/MonkeyLoader/GamePacks" "$(ProjectDir)/MonkeyLoader Gamepacks"
 		nuget init "$(ResonitePath)/MonkeyLoader/Mods" "$(ProjectDir)/MonkeyLoader Mods"
 	</PreBuildEvent>
