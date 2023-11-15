@@ -14,7 +14,7 @@ on:
         required: false
         default: ""
 env:
-  ResonitePath: "Download/Resonite"
+  ResonitePath: "${{ github.workspace }}/Download/Resonite"
   GITHUB: "true"
   ARTIFACT_NAME: SampleMod
   OUTPUT_NAME: mpmxyz.SampleMod
@@ -67,7 +67,6 @@ jobs:
     - name: Move files (MonkeyLoader)
       run: |
         unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
-        nuget init "$ResonitePath/MonkeyLoader/GamePacks" "MonkeyLoader GamePacks"
     - name: Restore dependencies
       run: |
         dotnet restore
