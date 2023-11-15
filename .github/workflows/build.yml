@@ -43,6 +43,7 @@ jobs:
         mkdir -p "$ResonitePath/MonkeyLoader/Mods"
     - name: Prepare RML directories
       run: |
+        mkdir -p "$ResonitePath/rml_mods"
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
     - name: Fetch MonkeyLoader
