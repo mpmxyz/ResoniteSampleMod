@@ -24,8 +24,7 @@ jobs:
   compile:
     uses: ./.github/workflows/build.yml
     with:
-      UPLOAD_ARTIFACTS: true
-      BUILD_VERSION: ${{ inputs.version }}
+      RELEASE_VERSION: ${{ inputs.version }}
   create-release:
     runs-on: ubuntu-latest
     needs: compile
