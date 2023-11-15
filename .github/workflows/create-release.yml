@@ -36,7 +36,7 @@ jobs:
         uses: "ncipollo/release-action@v1.13.0"
         with:
           artifactErrorsFailBuild: true
-          artifacts: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
+          artifacts: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
           body: "${{ inputs.description }}"
           name: "${{ inputs.name }}"
           tag: "v${{ inputs.version }}"
