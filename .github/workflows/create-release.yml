@@ -17,16 +17,17 @@ on:
         default: ""
   #TODO: create automatic trigger from pushed git tag v[0-9]+.[0-9]+.[0-9]+
 env:
-  NUGET_PUBLISH_TARGET: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+  NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   TEMP_NUGET_FOLDER: "nupkgs"
+  ARTIFACT_NAME: SampleMod
 name: "Create Release"
 jobs:
   compile:
     uses: ./.github/workflows/build.yml
     with:
-      RELEASE_VERSION: ${{ inputs.version }}
+      RELEASE_VERSION: "${{ inputs.version }}"
     secrets: 
-      RESONITE_CLONE_TOKEN: ${{ secrets.RESONITE_CLONE_TOKEN }}
+      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
   create-release:
     runs-on: ubuntu-latest
     needs: compile
@@ -35,11 +36,11 @@ jobs:
         uses: "ncipollo/release-action@v1.13.0"
         with:
           artifactErrorsFailBuild: true
-          artifacts: "*.dll,*.zip,*.nupkg"
-          body: ${{ inputs.description }}
-          name: ${{ inputs.name }}
+          artifacts: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
+          body: "${{ inputs.description }}"
+          name: "${{ inputs.name }}"
           tag: "v${{ inputs.version }}"
-          commit: ${{ github.ref }}
+          commit: "${{ github.ref }}"
   push-nuget:
     runs-on: ubuntu-latest
     needs: compile
@@ -47,13 +48,9 @@ jobs:
     - name: Download NuGet package build artifacts
       uses: actions/download-artifact@v2.1.1
       with:
-        name: "*.nupkg"
+        name: "${{ env.ARTIFACT_NAME }}-MonkeyLoader.nupkg"
         path: "${{ env.TEMP_NUGET_FOLDER }}/"
-    - name: debug
-      run: |
-        ls
-        ls ${{ env.TEMP_NUGET_FOLDER }}
     - name: Add repo owner's NuGet package source
-      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name "publish_target" "${{ env.NUGET_PUBLISH_TARGET }}"
+      run: dotnet nuget add source --username "${{ github.repository_owner }}" --password "${{ secrets.GITHUB_TOKEN }}" --store-password-in-clear-text --name "publish_target" "${{ env.NUGET_PUBLISH_TARGET }}"
     - name: Publish to NuGet feed
-      run: dotnet nuget push "${{ env.TEMP_NUGET_FOLDER }}/**.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "publish_target"
+      run: dotnet nuget push "${{ env.TEMP_NUGET_FOLDER }}/**.nupkg" --api-key "${{ secrets.GITHUB_TOKEN }}" --source "publish_target"
