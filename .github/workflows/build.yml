@@ -68,8 +68,6 @@ jobs:
         unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Restore dependencies
       run: |
-        echo $PWD
-        ls "MonkeyLoader GamePacks"
         dotnet restore
     - name: Build (MonkeyLoader)
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
