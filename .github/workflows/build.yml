@@ -96,5 +96,5 @@ jobs:
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.ARTIFACT_NAME }}-ResoniteModLoader
+        name: ${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip
         path: ${{ env.OUTPUT_FOLDER_RML }}/archive/
