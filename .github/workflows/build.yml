@@ -13,6 +13,9 @@ on:
         type: string
         required: false
         default: ""
+    secrets:
+      RESONITE_CLONE_TOKEN:
+        required: true
 env:
   ResonitePath: "${{ github.workspace }}/Download/Resonite"
   ARTIFACT_NAME: SampleMod
