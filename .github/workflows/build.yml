@@ -15,7 +15,6 @@ on:
         default: ""
 env:
   ResonitePath: "${{ github.workspace }}/Download/Resonite"
-  GITHUB: "true"
   ARTIFACT_NAME: SampleMod
   OUTPUT_NAME: mpmxyz.SampleMod
   OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
@@ -69,6 +68,8 @@ jobs:
         unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Restore dependencies
       run: |
+        echo $PWD
+        ls "MonkeyLoader GamePacks"
         dotnet restore
     - name: Build (MonkeyLoader)
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
