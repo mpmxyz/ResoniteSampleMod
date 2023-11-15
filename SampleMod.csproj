@@ -38,14 +38,12 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
   <PropertyGroup Condition="'$(Configuration)' == 'Debug MonkeyLoader' Or '$(Configuration)' == 'Release MonkeyLoader'">
     <IsMonkeyLoader>true</IsMonkeyLoader>
     <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(ProjectDir)\MonkeyLoader Gamepacks"
-		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(ProjectDir)\MonkeyLoader Mods"
+		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(MSBuildProjectDirectory)\MonkeyLoader Gamepacks"
+		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(MSBuildProjectDirectory)\MonkeyLoader Mods"
 	</PreBuildEvent>
     <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-		echo $PWD
-		ls
-		nuget init "$(ResonitePath)/MonkeyLoader/GamePacks" "$(ProjectDir)/MonkeyLoader Gamepacks"
-		nuget init "$(ResonitePath)/MonkeyLoader/Mods" "$(ProjectDir)/MonkeyLoader Mods"
+		nuget init "$(ResonitePath)/MonkeyLoader/GamePacks" "$(MSBuildProjectDirectory)/MonkeyLoader Gamepacks"
+		nuget init "$(ResonitePath)/MonkeyLoader/Mods" "$(MSBuildProjectDirectory)/MonkeyLoader Mods"
 	</PreBuildEvent>
 	<IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
