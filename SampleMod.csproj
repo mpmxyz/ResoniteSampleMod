@@ -37,18 +37,6 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug MonkeyLoader' Or '$(Configuration)' == 'Release MonkeyLoader'">
     <IsMonkeyLoader>true</IsMonkeyLoader>
-    <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-		echo "$(MSBuildProjectDirectory)"
-		nuget init "$(ResonitePath)\MonkeyLoader\GamePacks" "$(MSBuildProjectDirectory)\MonkeyLoader Gamepacks"
-		nuget init "$(ResonitePath)\MonkeyLoader\Mods" "$(MSBuildProjectDirectory)\MonkeyLoader Mods"
-	</PreBuildEvent>
-    <PreBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-		echo "$(MSBuildProjectDirectory)"
-		echo "$(ResonitePath)/MonkeyLoader/GamePacks"
-		ls "$(ResonitePath)/MonkeyLoader/GamePacks"
-		nuget init "$(ResonitePath)/MonkeyLoader/GamePacks" "$(MSBuildProjectDirectory)/MonkeyLoader Gamepacks"
-		nuget init "$(ResonitePath)/MonkeyLoader/Mods" "$(MSBuildProjectDirectory)/MonkeyLoader Mods"
-	</PreBuildEvent>
 	<IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <StartAction>Program</StartAction>
@@ -56,6 +44,16 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
     <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
+  <Target Name="ExtractInstalledMonkeyMods" BeforeTargets="Restore;CollectPackageReferences" Condition="$(IsMonkeyLoader)">
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows')) And '$(CI)' == ''"
+          Command="
+          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Gamepacks&quot;
+          nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;"/>
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(CI)' == ''"
+		  Command="
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Gamepacks&quot;
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;"/>
+  </Target>
   <Target Name="MovePack" AfterTargets="Pack" Condition="$(IsMonkeyLoader)">
     <Exec
       Condition="$([MSBuild]::IsOSPlatform('Windows'))"
