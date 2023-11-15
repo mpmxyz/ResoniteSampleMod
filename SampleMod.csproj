@@ -47,14 +47,12 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
   <Target Name="ExtractInstalledMonkeyMods" BeforeTargets="Restore;CollectPackageReferences" Condition="$(IsMonkeyLoader)">
 	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))"
           Command="
-          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Gamepacks&quot;
+          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader GamePacks&quot;
           nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;"/>
 	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux'))"
 		  Command="
-          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Gamepacks&quot;
-          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;
-		  echo $PWD
-		  ls 'MonkeyLoader GamePacks'"/>
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader GamePacks&quot;
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;"/>
   </Target>
   <Target Name="MovePack" AfterTargets="Pack" Condition="$(IsMonkeyLoader)">
     <Exec
@@ -68,11 +66,11 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
     <DefaultItemExcludes>$(DefaultItemExcludes);obj/**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="MonkeyLoader Gamepacks\**" />
+    <Compile Remove="MonkeyLoader GamePacks\**" />
     <Compile Remove="Test\**" />
-    <EmbeddedResource Remove="MonkeyLoader Gamepacks\**" />
+    <EmbeddedResource Remove="MonkeyLoader GamePacks\**" />
     <EmbeddedResource Remove="Test\**" />
-    <None Remove="MonkeyLoader Gamepacks\**" />
+    <None Remove="MonkeyLoader GamePacks\**" />
     <None Remove="Test\**" />
   </ItemGroup>
   <ItemGroup>
