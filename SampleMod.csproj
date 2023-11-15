@@ -25,10 +25,10 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
   <PropertyGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
     <IsRML>true</IsRML>
     <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-      copy /Y "$(AssemblyName).dll" "$(ResonitePath)\rml_mods\"
+      copy /Y "$(AssemblyName).dll" "$(ResonitePath)\rml_mods\$(AssemblyName).dll"
 	</PostBuildEvent>
     <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-      cp -f "$(AssemblyName).dll" "$(ResonitePath)/rml_mods/"
+      cp -f "$(AssemblyName).dll" "$(ResonitePath)/rml_mods/$(AssemblyName).dll"
 	</PostBuildEvent>
     <StartAction>Program</StartAction>
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
