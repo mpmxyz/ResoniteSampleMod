@@ -52,7 +52,9 @@ Ensure that the versions in the csproj file and in your release flow trigger mat
 	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux'))"
 		  Command="
           nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Gamepacks&quot;
-          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;"/>
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;
+		  echo $PWD
+		  ls 'MonkeyLoader GamePacks'"/>
   </Target>
   <Target Name="MovePack" AfterTargets="Pack" Condition="$(IsMonkeyLoader)">
     <Exec
