@@ -27,16 +27,70 @@ env:
   PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
-  ARTIFACT_NAME: SampleMod
-  ASSEMBLY_NAME: mpmxyz.SampleMod
-  OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
-  OUTPUT_FOLDER_RML: bin/Release RML/net472
-  RESONITE_CLONE_REPO: ${{ github.repository_owner }}/ResoniteFiles
+  ARTIFACT_NAME: "SampleMod"
+  ASSEMBLY_NAME: "mpmxyz.SampleMod"
+  OUTPUT_FOLDER_MONKEY: "bin/Release MonkeyLoader"
+  OUTPUT_FOLDER_RML: "bin/Release RML/net472"
+  RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
   run:
     working-directory: "./repo"
 jobs:
-  build:
+  build-ResoniteModLoader:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v4
+      with:
+        path: ${{ env.PROJECT_PATH }}
+    - name: Fetch latest Resonite
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.RESONITE_CLONE_REPO }}
+        token: ${{ secrets.RESONITE_CLONE_TOKEN }}
+        path: ${{ env.ResonitePath }}/..
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Prepare RML directories
+      run: |
+        mkdir -p "$ResonitePath/rml_mods"
+        mkdir -p "$ResonitePath/rml_libs"
+        mkdir -p "$ResonitePath/Libraries"
+    - name: Fetch latest ResoniteModLoader
+      uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
+      with:
+        repository: resonite-modding-group/ResoniteModLoader
+        latest: true
+        fileName: "*.dll"
+        out-file-path: RML/
+    - name: Move files (ResoniteModLoader)
+      run: |
+        mv ${{ github.workspace }}/RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
+        mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
+    - name: Restore dependencies
+      run: |
+        dotnet restore --configuration "Release RML"
+    - name: Build (ResoniteModLoader)
+      run: |
+        dotnet build --no-restore --configuration "Release RML"
+        cd "${{ env.OUTPUT_FOLDER_RML }}"
+        mkdir -p "archive/rml_mods"
+        cp "${{ env.ASSEMBLY_NAME }}.dll" "archive/rml_mods/${{ env.ASSEMBLY_NAME }}.dll"
+        #mkdir -p "archive/rml_libs"
+        #cp LIB.dll "archive/rml_libs/LIB.dll"
+        cd archive
+        zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
+    - name: Test (ResoniteModLoader)
+      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
+    - name: Upload build artifacts (ResoniteModLoader)
+      if: ${{ inputs.RELEASE_VERSION }}
+      uses: actions/upload-artifact@v3.1.3
+      with: 
+        name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
+        path: "${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
+  build-MonkeyLoader:
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -59,11 +113,6 @@ jobs:
         mkdir -p "$PROJECT_PATH/MonkeyLoader Mods"
         mkdir -p "$ResonitePath/MonkeyLoader/GamePacks"
         mkdir -p "$ResonitePath/MonkeyLoader/Mods"
-    - name: Prepare RML directories
-      run: |
-        mkdir -p "$ResonitePath/rml_mods"
-        mkdir -p "$ResonitePath/rml_libs"
-        mkdir -p "$ResonitePath/Libraries"
     - name: Fetch MonkeyLoader
       uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
@@ -71,48 +120,19 @@ jobs:
         tag: v0.1.0-alpha
         fileName: "MonkeyLoader*.zip"
         out-file-path: MonkeyLoader/
-    - name: Fetch latest ResoniteModLoader
-      uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
-      with:
-        repository: resonite-modding-group/ResoniteModLoader
-        latest: true
-        fileName: "*.dll"
-        out-file-path: RML/
-    - name: Move files (ResoniteModLoader)
-      run: |
-        mv ${{ github.workspace }}/RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
-        mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Move files (MonkeyLoader)
       run: |
         unzip -o ${{ github.workspace }}/MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Restore dependencies
       run: |
-        dotnet restore
+        dotnet restore --configuration "Release MonkeyLoader"
     - name: Build (MonkeyLoader)
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
-    - name: Build (ResoniteModLoader)
-      run: |
-        dotnet build --no-restore --configuration "Release RML"
-        cd "${{ env.OUTPUT_FOLDER_RML }}"
-        mkdir -p "archive/rml_mods"
-        cp "${{ env.ASSEMBLY_NAME }}.dll" "archive/rml_mods/${{ env.ASSEMBLY_NAME }}.dll"
-        #mkdir -p "archive/rml_libs"
-        #cp LIB.dll "archive/rml_libs/LIB.dll"
-        cd archive
-        zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
     - name: Test (MonkeyLoader)
       run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
-    - name: Test (ResoniteModLoader)
-      run: dotnet test --no-build --verbosity normal --configuration "Release RML"
     - name: Upload build artifacts (MonkeyLoader)
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: "${{ env.ARTIFACT_NAME }}-MonkeyLoader"
         path: "${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.ASSEMBLY_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg"
-    - name: Upload build artifacts (ResoniteModLoader)
-      if: ${{ inputs.RELEASE_VERSION }}
-      uses: actions/upload-artifact@v3.1.3
-      with: 
-        name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
-        path: "${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
