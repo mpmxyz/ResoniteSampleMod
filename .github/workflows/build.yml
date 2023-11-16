@@ -22,7 +22,7 @@ on:
       RESONITE_CLONE_TOKEN:
         required: true
 env:
-  ResonitePath: "${{ github.workspace }}/Download/Resonite"
+  ResonitePath: "${{ github.workspace }}/../Download/Resonite"
   PROJECT_URL: "${{ github.server_url }}/${{ github.repository }}"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
@@ -30,6 +30,7 @@ env:
   ASSEMBLY_NAME: mpmxyz.SampleMod
   OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
   OUTPUT_FOLDER_RML: bin/Release RML/net472
+  RESONITE_CLONE_REPO: ${{ github.repository_owner }}/ResoniteFiles
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,7 +40,7 @@ jobs:
     - name: Fetch latest Resonite
       uses: actions/checkout@v4
       with:
-        repository: mpmxyz/ResoniteFiles
+        repository: ${{ env.RESONITE_CLONE_REPO }}
         token: ${{ secrets.RESONITE_CLONE_TOKEN }}
         path: ${{ env.ResonitePath }}/..
     - name: Setup .NET
