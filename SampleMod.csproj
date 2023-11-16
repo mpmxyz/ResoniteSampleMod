@@ -1,4 +1,4 @@
-﻿<Project InitialTargets="CheckReleaseVersion" Sdk="Microsoft.NET.Sdk">
+﻿<Project InitialTargets="CheckGithubVariables" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>mpmxyz.SampleMod</AssemblyName>
     <Authors>mpmxyz</Authors>
@@ -8,19 +8,23 @@
     <Description>A sample Resonite Mod</Description>
     <Copyright>CC0</Copyright>
     <Version>1.0.0</Version>
-    <PackageProjectUrl>https://github.com/mpmxyz/ResoniteSampleMod</PackageProjectUrl>
-    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+    <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
+    <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
     <Configurations>Debug RML;Release RML;Debug MonkeyLoader;Release MonkeyLoader</Configurations>
     <BaseOutputPath>bin\</BaseOutputPath>
     <IsRML>false</IsRML>
     <IsMonkeyLoader>false</IsMonkeyLoader>
   </PropertyGroup>
-  <Target Name="CheckReleaseVersion">
+  <Target Name="CheckGithubVariables">
 	  <Error
 		  Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)"
 		  Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))
 Ensure that the versions in the csproj file and in your release flow trigger match!"/>
+	  <Error
+		  Condition="$(ASSEMBLY_NAME) != '' And $(ASSEMBLY_NAME) != $(AssemblyName)"
+		  Text="Difference between built 'AssemblyName' ($(AssemblyName)) and 'ASSEMBLY_NAME' expected by github! ($(ASSEMBLY_NAME))
+Ensure that the names in the csproj file and in your workflow environment match!"/>
   </Target>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug RML' Or '$(Configuration)' == 'Release RML'">
     <IsRML>true</IsRML>
