@@ -71,7 +71,7 @@ jobs:
         mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Restore dependencies
       run: |
-        dotnet restore --configuration "Release RML"
+        dotnet restore
     - name: Build (ResoniteModLoader)
       run: |
         dotnet build --no-restore --configuration "Release RML"
@@ -125,7 +125,7 @@ jobs:
         unzip -o ${{ github.workspace }}/MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Restore dependencies
       run: |
-        dotnet restore --configuration "Release MonkeyLoader"
+        dotnet restore
     - name: Build (MonkeyLoader)
       run: dotnet build --no-restore --configuration "Release MonkeyLoader"
     - name: Test (MonkeyLoader)
