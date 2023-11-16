@@ -49,11 +49,11 @@ Ensure that the names in the csproj file and in your workflow environment match!
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <Target Name="ExtractInstalledMonkeyMods" BeforeTargets="Restore;CollectPackageReferences" Condition="$(IsMonkeyLoader)">
-	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows')) And Exists('$(ResonitePath)\MonkeyLoader')"
           Command="
           nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader GamePacks&quot;
           nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;"/>
-	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux')) And Exists('$(ResonitePath)/MonkeyLoader')"
 		  Command="
           nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader GamePacks&quot;
           nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;"/>
