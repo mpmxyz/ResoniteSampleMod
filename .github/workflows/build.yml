@@ -71,7 +71,8 @@ jobs:
         mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Restore dependencies
       run: |
-        dotnet restore
+        #ignore missing MonkeyLoader
+        dotnet restore --ignore-failed-sources
     - name: Build (ResoniteModLoader)
       run: |
         dotnet build --no-restore --configuration "Release RML"
