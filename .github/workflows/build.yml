@@ -34,7 +34,7 @@ env:
   RESONITE_CLONE_REPO: ${{ github.repository_owner }}/ResoniteFiles
 defaults:
   run:
-    working-directory: ${{ env.PROJECT_PATH }}
+    working-directory: "${{ github.workspace }}/repo"
 jobs:
   build:
     runs-on: ubuntu-latest
