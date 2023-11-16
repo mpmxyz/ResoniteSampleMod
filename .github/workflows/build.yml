@@ -18,6 +18,7 @@ on:
         required: true
 env:
   ResonitePath: "${{ github.workspace }}/Download/Resonite"
+  RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
   ARTIFACT_NAME: SampleMod
   OUTPUT_NAME: mpmxyz.SampleMod
   OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
