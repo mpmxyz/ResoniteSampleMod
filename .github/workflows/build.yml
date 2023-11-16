@@ -58,19 +58,19 @@ jobs:
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
     - name: Fetch MonkeyLoader
-      uses: duhow/download-github-release-assets@v1.1.1
+      uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
         repository: Banane9/MonkeyLoader
         tag: v0.1.0-alpha
-        target: MonkeyLoader/
-        files: "MonkeyLoader*.zip"
+        fileName: "MonkeyLoader*.zip"
+        out-file-path: MonkeyLoader/
     - name: Fetch latest ResoniteModLoader
-      uses: duhow/download-github-release-assets@v1.1.1
+      uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
         repository: resonite-modding-group/ResoniteModLoader
-        release-id: latest
-        target: RML/
-        files: "*.dll"
+        latest: true
+        fileName: "*.dll"
+        out-file-path: RML/
     - name: Move files (ResoniteModLoader)
       run: |
         mv RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
