@@ -81,7 +81,10 @@ jobs:
         cd "${{ env.OUTPUT_FOLDER_RML }}"
         mkdir -p "archive/rml_mods"
         cp "${{ env.OUTPUT_NAME }}.dll" "archive/rml_mods/${{ env.OUTPUT_NAME }}.dll"
-#        mkdir -p "archive/rml_libs"
+        #mkdir -p "archive/rml_libs"
+        #cp LIB.dll "archive/rml_libs/LIB.dll"
+        cd archive
+        zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
     - name: Test (MonkeyLoader)
       run: dotnet test --no-build --verbosity normal --configuration "Release MonkeyLoader"
     - name: Test (ResoniteModLoader)
@@ -90,11 +93,11 @@ jobs:
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.ARTIFACT_NAME }}-MonkeyLoader.nupkg
-        path: ${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.OUTPUT_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg
+        name: "${{ env.ARTIFACT_NAME }}-MonkeyLoader"
+        path: "${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.OUTPUT_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg"
     - name: Upload build artifacts (ResoniteModLoader)
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
-        name: ${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip
-        path: ${{ env.OUTPUT_FOLDER_RML }}/archive/
+        name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
+        path: "${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
