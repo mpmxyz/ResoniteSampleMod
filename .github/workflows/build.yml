@@ -22,8 +22,9 @@ on:
       RESONITE_CLONE_TOKEN:
         required: true
 env:
-  ResonitePath: "${{ github.workspace }}/../Download/Resonite"
+  ResonitePath: "${{ github.workspace }}/Download/Resonite"
   PROJECT_URL: "${{ github.server_url }}/${{ github.repository }}"
+  PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
   ARTIFACT_NAME: SampleMod
@@ -31,12 +32,17 @@ env:
   OUTPUT_FOLDER_MONKEY: bin/Release MonkeyLoader
   OUTPUT_FOLDER_RML: bin/Release RML/net472
   RESONITE_CLONE_REPO: ${{ github.repository_owner }}/ResoniteFiles
+defaults:
+  run:
+    working-directory: ${{ env.PROJECT_PATH }}
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
       uses: actions/checkout@v4
+      with:
+        path: ${{ env.PROJECT_PATH }}
     - name: Fetch latest Resonite
       uses: actions/checkout@v4
       with:
@@ -49,8 +55,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Prepare MonkeyLoader directories
       run: |
-        mkdir -p "MonkeyLoader GamePacks"
-        mkdir -p "MonkeyLoader Mods"
+        mkdir -p "$PROJECT_PATH/MonkeyLoader GamePacks"
+        mkdir -p "$PROJECT_PATH/MonkeyLoader Mods"
         mkdir -p "$ResonitePath/MonkeyLoader/GamePacks"
         mkdir -p "$ResonitePath/MonkeyLoader/Mods"
     - name: Prepare RML directories
@@ -74,11 +80,11 @@ jobs:
         out-file-path: RML/
     - name: Move files (ResoniteModLoader)
       run: |
-        mv RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
-        mv RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
+        mv ${{ github.workspace }}/RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
+        mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Move files (MonkeyLoader)
       run: |
-        unzip -o MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
+        unzip -o ${{ github.workspace }}/MonkeyLoader/MonkeyLoader*.zip -d "$ResonitePath"
     - name: Restore dependencies
       run: |
         dotnet restore
