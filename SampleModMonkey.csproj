@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="./SampleMod.csproj"/>
+  <PropertyGroup>
+    <BaseOutputPath>bin\MonkeyLoader</BaseOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+	<IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+    <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
+    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+  </PropertyGroup>
+  <Target Name="ExtractInstalledMonkeyMods" BeforeTargets="Restore;CollectPackageReferences">
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows')) And Exists('$(ResonitePath)\MonkeyLoader')"
+          Command="
+          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader GamePacks&quot;
+          nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;"/>
+	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux')) And Exists('$(ResonitePath)/MonkeyLoader')"
+		  Command="
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader GamePacks&quot;
+          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;"/>
+  </Target>
+  <Target Name="MovePack" AfterTargets="Pack"">
+    <Exec
+      Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+      Command="copy /Y &quot;$(OutputPath)\..\$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg&quot;"/>
+    <Exec
+      Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+      Command="cp -f &quot;$(OutputPath)/../$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)/MonkeyLoader/Mods/$(AssemblyName).nupkg&quot;"/>
+  </Target>
+  <ItemGroup>
+    <Compile Update="SampleModMonkey.cs" />
+    <Reference Include="Harmony">
+      <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="MonkeyLoader">
+      <HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
+    </Reference>
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="1.0.1" />    
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="SampleModRML.cs"/>
+  </ItemGroup>
+</Project>

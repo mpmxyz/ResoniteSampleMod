@@ -9,7 +9,7 @@
     <AssemblyTitle>Test</AssemblyTitle>
     <Product>Test</Product>
     <Copyright>Copyright ©  2023</Copyright>
-    <Configurations>Debug RML;Release RML;Debug MonkeyLoader;Release MonkeyLoader</Configurations>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <PropertyGroup>
