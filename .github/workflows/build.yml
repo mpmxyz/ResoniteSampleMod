@@ -78,7 +78,7 @@ jobs:
         dotnet restore "${{ env.PROJECT_FILE_RML }}"
     - name: Build (ResoniteModLoader)
       run: |
-        dotnet build --no-restore --Configuration "Release" "${{ env.PROJECT_FILE_RML }}"
+        dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE_RML }}"
         cd "${{ env.OUTPUT_FOLDER_RML }}"
         mkdir -p "archive/rml_mods"
         cp "${{ env.ASSEMBLY_NAME }}.dll" "archive/rml_mods/${{ env.ASSEMBLY_NAME }}.dll"
@@ -87,7 +87,7 @@ jobs:
         cd archive
         zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
     - name: Test (ResoniteModLoader)
-      run: dotnet test --no-build --verbosity normal --Configuration "Release" "${{ env.TEST_FILE_RML }}"
+      run: dotnet test --no-build --verbosity normal --configuration "Release" "${{ env.TEST_FILE_RML }}"
     - name: Upload build artifacts (ResoniteModLoader)
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
@@ -131,9 +131,9 @@ jobs:
       run: |
         dotnet restore "${{ env.PROJECT_FILE_MONKEY }}"
     - name: Build (MonkeyLoader)
-      run: dotnet build --no-restore --Configuration "Release" "${{ env.PROJECT_FILE_MONKEY }}"
+      run: dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE_MONKEY }}"
     - name: Test (MonkeyLoader)
-      run: dotnet test --no-build --verbosity normal --Configuration "Release" "${{ env.TEST_FILE_MONKEY }}"
+      run: dotnet test --no-build --verbosity normal --configuration "Release" "${{ env.TEST_FILE_MONKEY }}"
     - name: Upload build artifacts (MonkeyLoader)
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
