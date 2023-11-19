@@ -1,8 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="./SampleMod.csproj"/>
+﻿<Project>
   <PropertyGroup>
     <BaseOutputPath>bin\RML</BaseOutputPath>
+    <BaseIntermediateOutputPath>obj\RML</BaseIntermediateOutputPath>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+    <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
+    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
+  <Import Project="./SampleMod.csproj" />
   <PropertyGroup>
     <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Windows'))">
       copy /Y "$(AssemblyName).dll" "$(ResonitePath)\rml_mods\$(AssemblyName).dll"
@@ -10,10 +15,6 @@
     <PostBuildEvent Condition="$([MSBuild]::IsOSPlatform('Linux'))">
       cp -f "$(AssemblyName).dll" "$(ResonitePath)/rml_mods/$(AssemblyName).dll"
 	</PostBuildEvent>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
-    <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
-    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Harmony">
@@ -21,6 +22,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="SampleModMonkey.cs"/>
+    <Compile Include="PatchesHarmony.cs" />
+    <Compile Include="SampleModRML.cs" />
   </ItemGroup>
 </Project>

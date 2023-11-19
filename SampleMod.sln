@@ -7,54 +7,32 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMod", "SampleMod.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMod-MonkeyLoader", "SampleModMonkey.csproj", "{AF85F55F-B5DD-46E5-BAD4-331329445A22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModMonkey", "SampleModMonkey.csproj", "{AF85F55F-B5DD-46E5-BAD4-331329445A22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModRML", "SampleModRML.csproj", "{0A214F6D-07FD-49F5-B19A-7463485B685F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug MonkeyLoader|AnyCPU = Debug MonkeyLoader|AnyCPU
-		Debug RML|AnyCPU = Debug RML|AnyCPU
 		Debug|AnyCPU = Debug|AnyCPU
-		Release MonkeyLoader|AnyCPU = Release MonkeyLoader|AnyCPU
-		Release RML|AnyCPU = Release RML|AnyCPU
 		Release|AnyCPU = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug MonkeyLoader|AnyCPU.ActiveCfg = Debug MonkeyLoader|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug MonkeyLoader|AnyCPU.Build.0 = Debug MonkeyLoader|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug RML|AnyCPU.ActiveCfg = Debug RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug RML|AnyCPU.Build.0 = Debug RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|AnyCPU.ActiveCfg = Debug RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|AnyCPU.Build.0 = Debug RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release MonkeyLoader|AnyCPU.ActiveCfg = Release MonkeyLoader|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release MonkeyLoader|AnyCPU.Build.0 = Release MonkeyLoader|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release RML|AnyCPU.ActiveCfg = Release RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release RML|AnyCPU.Build.0 = Release RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|AnyCPU.ActiveCfg = Release RML|AnyCPU
-		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|AnyCPU.Build.0 = Release RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug MonkeyLoader|AnyCPU.ActiveCfg = Debug MonkeyLoader|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug MonkeyLoader|AnyCPU.Build.0 = Debug MonkeyLoader|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug RML|AnyCPU.ActiveCfg = Debug RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug RML|AnyCPU.Build.0 = Debug RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|AnyCPU.ActiveCfg = Debug RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|AnyCPU.Build.0 = Debug RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release MonkeyLoader|AnyCPU.ActiveCfg = Release MonkeyLoader|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release MonkeyLoader|AnyCPU.Build.0 = Release MonkeyLoader|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release RML|AnyCPU.ActiveCfg = Release RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release RML|AnyCPU.Build.0 = Release RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|AnyCPU.ActiveCfg = Release RML|AnyCPU
-		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|AnyCPU.Build.0 = Release RML|AnyCPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug MonkeyLoader|AnyCPU.ActiveCfg = Debug|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug MonkeyLoader|AnyCPU.Build.0 = Debug|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug RML|AnyCPU.ActiveCfg = Debug|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug RML|AnyCPU.Build.0 = Debug|Any CPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{3FA1B07B-D0C9-4EA5-B228-93DD6891EFD2}.Release|AnyCPU.Build.0 = Release|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{DAB2D7A9-757B-4876-B95B-64A2E4F965B6}.Release|AnyCPU.Build.0 = Release|AnyCPU
 		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
 		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Debug|AnyCPU.Build.0 = Debug|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release MonkeyLoader|AnyCPU.ActiveCfg = Release|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release MonkeyLoader|AnyCPU.Build.0 = Release|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release RML|AnyCPU.ActiveCfg = Release|Any CPU
-		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release RML|AnyCPU.Build.0 = Release|Any CPU
 		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{AF85F55F-B5DD-46E5-BAD4-331329445A22}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
