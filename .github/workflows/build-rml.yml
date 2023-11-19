@@ -30,7 +30,7 @@ env:
   PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
-  OUTPUT_FOLDER_RML: "bin/RML/Release/net472"
+  OUTPUT_FOLDER_RML: "repo/bin/RML/Release/net472"
   TEST_FILE_RML: "Test/Test.csproj"
   RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
