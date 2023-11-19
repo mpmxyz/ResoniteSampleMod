@@ -30,7 +30,7 @@ env:
   PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
-  OUTPUT_FOLDER_MONKEY: "repo/bin/MonkeyLoader/Release"
+  OUTPUT_FOLDER_MONKEY: "bin/MonkeyLoader/Release"
   TEST_FILE_MONKEY: "Test/Test.csproj"
   RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
@@ -82,4 +82,4 @@ jobs:
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: "${{ env.ARTIFACT_NAME }}-MonkeyLoader"
-        path: "${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.ASSEMBLY_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg"
+        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER_MONKEY }}/${{ env.ASSEMBLY_NAME }}.${{ inputs.RELEASE_VERSION }}.nupkg"

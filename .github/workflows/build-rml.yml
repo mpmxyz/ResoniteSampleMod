@@ -30,7 +30,7 @@ env:
   PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
-  OUTPUT_FOLDER_RML: "repo/bin/RML/Release/net472"
+  OUTPUT_FOLDER_RML: "bin/RML/Release/net472"
   TEST_FILE_RML: "Test/Test.csproj"
   RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
@@ -90,4 +90,4 @@ jobs:
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
-        path: "${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
+        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
