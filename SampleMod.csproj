@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>mpmxyz.SampleMod</AssemblyName>
+    <AssemblyName>mpmxyz.SampleMod.$(VariantSuffix)</AssemblyName>
     <Authors>mpmxyz</Authors>
     <TargetFramework>net472</TargetFramework>
     <AssemblyTitle>SampleMod</AssemblyTitle>
@@ -18,8 +18,8 @@
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj\Common</BaseIntermediateOutputPath>
   </PropertyGroup>
   <Target Name="CheckGithubVariables">
-	  <Error Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
-	  <Error Condition="$(ASSEMBLY_NAME) != '' And $(ASSEMBLY_NAME) != $(AssemblyName)" Text="Difference between built 'AssemblyName' ($(AssemblyName)) and 'ASSEMBLY_NAME' expected by github! ($(ASSEMBLY_NAME))&#xD;&#xA;Ensure that the names in the csproj file and in your workflow environment match!" />
+    <Error Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
+    <Error Condition="$(ASSEMBLY_NAME) != '' And $(ASSEMBLY_NAME) != $(AssemblyName)" Text="Difference between built 'AssemblyName' ($(AssemblyName)) and 'ASSEMBLY_NAME' expected by github! ($(ASSEMBLY_NAME))&#xD;&#xA;Ensure that the names in the csproj file and in your workflow environment match!" />
   </Target>
   <Target Name="EnsureMonkeyModsDirectory" BeforeTargets="Restore;CollectPackageReferences" Condition="!Exists('$(MSBuildProjectDirectory)\MonkeyLoader Mods')">
     <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="mkdir &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;" />

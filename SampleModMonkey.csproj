@@ -6,6 +6,7 @@
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+    <VariantSuffix>MonkeyLoader</VariantSuffix>
   </PropertyGroup>
   <Import Project="./SampleMod.csproj" />
   <PropertyGroup>
@@ -13,8 +14,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <Target Name="ExtractInstalledMonkeyMods" BeforeTargets="Restore;CollectPackageReferences">
-	  <Exec Condition="$([MSBuild]::IsOSPlatform('Windows')) And Exists('$(ResonitePath)\MonkeyLoader')" Command="&#xD;&#xA;          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader GamePacks&quot;&#xD;&#xA;          nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;" />
-	  <Exec Condition="$([MSBuild]::IsOSPlatform('Linux')) And Exists('$(ResonitePath)/MonkeyLoader')" Command="&#xD;&#xA;          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader GamePacks&quot;&#xD;&#xA;          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;" />
+    <Exec Condition="$([MSBuild]::IsOSPlatform('Windows')) And Exists('$(ResonitePath)\MonkeyLoader')" Command="&#xD;&#xA;          nuget init &quot;$(ResonitePath)\MonkeyLoader\GamePacks&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader GamePacks&quot;&#xD;&#xA;          nuget init &quot;$(ResonitePath)\MonkeyLoader\Mods&quot; &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;" />
+    <Exec Condition="$([MSBuild]::IsOSPlatform('Linux')) And Exists('$(ResonitePath)/MonkeyLoader')" Command="&#xD;&#xA;          nuget init &quot;$(ResonitePath)/MonkeyLoader/GamePacks&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader GamePacks&quot;&#xD;&#xA;          nuget init &quot;$(ResonitePath)/MonkeyLoader/Mods&quot; &quot;$(MSBuildProjectDirectory)/MonkeyLoader Mods&quot;" />
   </Target>
   <Target Name="MovePack" AfterTargets="Pack">
     <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="copy /Y &quot;$(OutputPath)\..\$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)\MonkeyLoader\Mods\$(AssemblyName).nupkg&quot;" />

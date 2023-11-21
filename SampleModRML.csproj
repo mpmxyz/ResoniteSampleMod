@@ -6,6 +6,7 @@
     <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
     <StartArguments>-Screen -CachePath "$(ResoniteCache)" -LoadAssembly Libraries/ResoniteModLoader.dll</StartArguments>
     <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+    <VariantSuffix>ResoniteModLoader</VariantSuffix>
   </PropertyGroup>
   <Import Project="./SampleMod.csproj" />
   <PropertyGroup>
