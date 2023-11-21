@@ -43,6 +43,9 @@ on:
         type: boolean
         required: false
         default: true
+    secrets:
+      RESONITE_CLONE_TOKEN:
+        required: true
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
