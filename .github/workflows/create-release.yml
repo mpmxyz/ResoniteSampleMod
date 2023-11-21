@@ -5,23 +5,32 @@ on:
         type: string
         required: true
         description: "Version"
-        #TODO: add check for proper formatting - [0-9]+.[0-9]+.[0-9]+
       name:
         type: string
-        required: true
+        required: false
         description: "Title"
       description:
         type: string
         required: true
         description: "Description of changes"
         default: ""
-  #TODO: create automatic trigger from pushed git tag v[0-9]+.[0-9]+.[0-9]+
+      release-rml:
+        type: boolean
+        required: false
+        description: "Release for ResoniteModLoader"
+        default: true
+      release-monkey:
+        type: boolean
+        required: false
+        description: "Release for MonkeyLoader"
+        default: true
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
 name: "Create Release"
 jobs:
   compile-rml:
+    if: ${{ inputs.release-rml }}
     uses: ./.github/workflows/build-rml.yml
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
@@ -29,6 +38,7 @@ jobs:
     secrets: 
       RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
   compile-monkey:
+    if: ${{ inputs.release-monkey }}
     uses: ./.github/workflows/build-monkey.yml
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
@@ -36,11 +46,12 @@ jobs:
     secrets: 
       RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
   create-release:
+    if: ${{ inputs.release-rml }}
     runs-on: ubuntu-latest
     needs: compile-rml
     steps:
     - name: Download RML build artifacts
-      uses: actions/download-artifact@v2.1.1
+      uses: actions/download-artifact@v3.0.2
       with:
         name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
         path: "tmp/"
@@ -50,15 +61,16 @@ jobs:
         artifactErrorsFailBuild: true
         artifacts: "tmp/**.*"
         body: "${{ inputs.description }}"
-        name: "${{ inputs.name }}"
+        name: "${{ inputs.name || inputs.version }}"
         tag: "v${{ inputs.version }}"
         commit: "${{ github.ref }}"
   push-nuget:
+    if: ${{ inputs.release-monkey }}
     runs-on: ubuntu-latest
     needs: compile-monkey
     steps:
     - name: Download NuGet package build artifacts
-      uses: actions/download-artifact@v2.1.1
+      uses: actions/download-artifact@v3.0.2
       with:
         name: "${{ env.ARTIFACT_NAME }}-MonkeyLoader"
         path: "tmp/"
