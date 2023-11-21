@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace SampleMod
 {
-    internal class Patches
+    internal class PatchesHarmony
     {
         private static ISampleMod ModInstance;
 

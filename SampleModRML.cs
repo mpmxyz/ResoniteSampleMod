@@ -5,7 +5,7 @@ namespace SampleMod
     /// <summary>
     /// This mod is an implementation based on the example given in https://github.com/resonite-modding-group/ResoniteModLoader/blob/main/doc/making_mods.md.
     /// </summary>
-    public class SampleModRML : ResoniteMod//, ISampleMod
+    public class SampleModRML : ResoniteMod, ISampleMod
     {
         public override string Name => "SampleMod";
         public override string Author => "mpmxyz";

@@ -4,7 +4,7 @@ using MonkeyLoader.Resonite;
 using System;
 
 namespace SampleMod
-{//TODO: ensure that nuget pack -Build does not end in infinite recursion
+{
     public class SampleModMonkey : ResoniteMonkey<SampleModMonkey>, ISampleMod
     {
         public override string Name => "SampleMod";
@@ -21,7 +21,7 @@ namespace SampleMod
         protected override bool OnEngineReady()
         {
             LoadedConfig = Config.LoadSection<SampleModMonkeyConfig>();
-            Patches.Apply(this);
+            PatchesHarmony.Apply(this);
             return base.OnEngineReady();
         }
 
