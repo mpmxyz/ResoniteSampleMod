@@ -23,7 +23,7 @@ on:
         required: true
 env:
   ARTIFACT_NAME: "SampleMod"
-  ASSEMBLY_NAME: "mpmxyz.SampleMod"
+  ASSEMBLY_NAME: "mpmxyz.SampleMod.ResoniteModLoader"
   PROJECT_FILE_RML: "SampleModRML.csproj"
   ResonitePath: "${{ github.workspace }}/Download/Resonite"
   PROJECT_URL: "${{ github.server_url }}/${{ github.repository }}"
