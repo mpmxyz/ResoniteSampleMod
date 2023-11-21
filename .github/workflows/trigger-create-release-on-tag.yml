@@ -1,0 +1,12 @@
+on: 
+  push:
+    tags: "[0-9]*.*.*"
+  
+name: Create release on tag X.Y.Z
+jobs:
+  trigger:
+    uses: ./.github/workflows/create-release.yml
+    with:
+      version: ${{ github.ref_name }}
+      description: "automatically generated release ${{ github.ref_name }}"
+    
