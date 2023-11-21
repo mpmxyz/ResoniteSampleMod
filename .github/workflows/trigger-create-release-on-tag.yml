@@ -5,6 +5,7 @@ on:
 name: Create release on tag X.Y.Z
 jobs:
   trigger:
+    name: "Triggering release"
     uses: ./.github/workflows/create-release.yml
     with:
       version: ${{ github.ref_name }}
