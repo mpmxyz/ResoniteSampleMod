@@ -24,28 +24,6 @@ on:
         required: false
         description: "Release for MonkeyLoader"
         default: true
-  workflow_call:
-    inputs:
-      version:
-        type: string
-        required: true
-      name:
-        type: string
-        required: false
-      description:
-        type: string
-        required: true
-      release-rml:
-        type: boolean
-        required: false
-        default: true
-      release-monkey:
-        type: boolean
-        required: false
-        default: true
-    secrets:
-      RESONITE_CLONE_TOKEN:
-        required: true
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
