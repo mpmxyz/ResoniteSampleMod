@@ -71,10 +71,11 @@ jobs:
     - name: Restore dependencies
       run: |
         dotnet restore "${{ env.PROJECT_FILE }}"
+        dotnet restore "${{ env.TEST_PROJECT_FILE }}"
     - name: Check formatting
       run: |
-        dotnet format --verify-no-changes "${{ env.PROJECT_FILE }}"
-        dotnet format --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
+        dotnet format --no-restore --verify-no-changes "${{ env.PROJECT_FILE }}"
+        dotnet format --no-restore --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
     - name: Build
       run: dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE }}"
     - name: Test
