@@ -24,14 +24,14 @@ on:
 env:
   ARTIFACT_NAME: "SampleMod"
   ASSEMBLY_NAME: "mpmxyz.SampleMod.ResoniteModLoader"
-  PROJECT_FILE_RML: "SampleModRML.csproj"
+  PROJECT_FILE: "SampleModRML.csproj"
   ResonitePath: "${{ github.workspace }}/Download/Resonite"
   PROJECT_URL: "${{ github.server_url }}/${{ github.repository }}"
   PROJECT_PATH: "${{ github.workspace }}/repo"
   RELEASE_NOTES: "${{ inputs.RELEASE_NOTES }}"
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
-  OUTPUT_FOLDER_RML: "bin/RML/Release/net472"
-  TEST_FILE_RML: "Test/Test.csproj"
+  OUTPUT_FOLDER: "bin/RML/Release/net472"
+  TEST_PROJECT_FILE: "Test/Test.csproj"
   RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
   run:
@@ -54,11 +54,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - name: Prepare RML directories
-      run: |
-        mkdir -p "$ResonitePath/rml_mods"
-        mkdir -p "$ResonitePath/rml_libs"
-        mkdir -p "$ResonitePath/Libraries"
     - name: Fetch latest ResoniteModLoader
       uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
@@ -66,28 +61,35 @@ jobs:
         latest: true
         fileName: "*.dll"
         out-file-path: RML/
-    - name: Move files (ResoniteModLoader)
+    - name: Move ResoniteModLoader files
       run: |
+        mkdir -p "$ResonitePath/rml_mods"
+        mkdir -p "$ResonitePath/rml_libs"
+        mkdir -p "$ResonitePath/Libraries"
         mv ${{ github.workspace }}/RML/0Harmony.dll "$ResonitePath/rml_libs/0Harmony.dll"
         mv ${{ github.workspace }}/RML/ResoniteModLoader.dll "$ResonitePath/Libraries/ResoniteModLoader.dll"
     - name: Restore dependencies
       run: |
-        dotnet restore "${{ env.PROJECT_FILE_RML }}"
-    - name: Build (ResoniteModLoader)
+        dotnet restore "${{ env.PROJECT_FILE }}"
+    - name: Check formatting
       run: |
-        dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE_RML }}"
-        cd "${{ env.OUTPUT_FOLDER_RML }}"
+        dotnet format --verify-no-changes "${{ env.PROJECT_FILE }}"
+        dotnet format --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
+    - name: Build
+      run: |
+        dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE }}"
+        cd "${{ env.OUTPUT_FOLDER }}"
         mkdir -p "archive/rml_mods"
         cp "${{ env.ASSEMBLY_NAME }}.dll" "archive/rml_mods/${{ env.ASSEMBLY_NAME }}.dll"
         #mkdir -p "archive/rml_libs"
         #cp LIB.dll "archive/rml_libs/LIB.dll"
         cd archive
         zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
-    - name: Test (ResoniteModLoader)
-      run: dotnet test --no-build --verbosity normal --configuration "Release" "${{ env.TEST_FILE_RML }}"
-    - name: Upload build artifacts (ResoniteModLoader)
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
+    - name: Upload build artifacts
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
-        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER_RML }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
+        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
