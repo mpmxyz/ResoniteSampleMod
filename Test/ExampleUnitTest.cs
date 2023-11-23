@@ -8,7 +8,7 @@ namespace SampleMod
         [TestMethod]
         public void TestIncrement()
         {
-            Assert.AreEqual(2, TestableCode.Increment(0));
+            Assert.AreEqual(1, TestableCode.Increment(0));
         }
     }
 }
