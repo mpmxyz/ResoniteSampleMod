@@ -79,6 +79,8 @@ jobs:
         dotnet format --no-restore --verbosity diag --verify-no-changes "${{ env.PROJECT_FILE }}"
         echo "!!!"
         dotnet format --no-restore --verbosity diag --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
+      env:
+        ASSEMBLY_NAME: ""
     - name: Test
       run: dotnet test --no-restore --verbosity normal --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
       env:
