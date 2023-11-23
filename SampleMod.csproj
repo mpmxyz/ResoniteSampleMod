@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <VariantSuffix Condition="'$(VariantSuffix)' == ''">Common</VariantSuffix>
     <AssemblyName>mpmxyz.SampleMod.$(VariantSuffix)</AssemblyName>
     <Authors>mpmxyz</Authors>
     <TargetFramework>net472</TargetFramework>

@@ -72,6 +72,8 @@ jobs:
       run: |
         dotnet restore "${{ env.PROJECT_FILE }}"
         dotnet restore "${{ env.TEST_PROJECT_FILE }}"
+      env:
+        ASSEMBLY_NAME: ""
     - name: Check formatting
       run: |
         dotnet format --no-restore --verify-no-changes "${{ env.PROJECT_FILE }}"
@@ -80,6 +82,8 @@ jobs:
       run: dotnet build --no-restore --configuration "Release" "${{ env.PROJECT_FILE }}"
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
+      env:
+        ASSEMBLY_NAME: ""
     - name: Upload build artifacts
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
