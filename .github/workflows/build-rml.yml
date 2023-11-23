@@ -81,7 +81,7 @@ jobs:
       env:
         ASSEMBLY_NAME: ""
     - name: Test
-      run: dotnet test --no-restore --verbosity normal --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
+      run: dotnet test --no-restore --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
       env:
         ASSEMBLY_NAME: ""
     - name: Build
