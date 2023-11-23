@@ -5,5 +5,7 @@
         bool Enabled { get; }
 
         void DoSomething();
+
+        void test();
     }
 }
