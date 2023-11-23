@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <VariantSuffix Condition="'$(VariantSuffix)' == ''">Common</VariantSuffix>
     <AssemblyName>mpmxyz.SampleMod.$(VariantSuffix)</AssemblyName>
     <Authors>mpmxyz</Authors>
     <TargetFramework>net472</TargetFramework>
@@ -9,13 +10,16 @@
     <Product>SampleMod</Product>
     <Description>A sample Resonite Mod</Description>
     <Copyright>CC0</Copyright>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
     <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
 	<Configurations>Debug;Release</Configurations>
     <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">bin\Common</BaseOutputPath>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj\Common</BaseIntermediateOutputPath>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-All</AnalysisLevel>
+    <EnforceCodeStyleInBuild Condition="'$(CI)' == ''">true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <Target Name="CheckGithubVariables">
     <Error Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
@@ -79,9 +83,6 @@
     </Reference>
     <Reference Include="ProtoFluxBindings">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="ResoniteModLoader">
-      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
     </Reference>
     <Reference Include="QuantityX">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\QuantityX.dll</HintPath>
