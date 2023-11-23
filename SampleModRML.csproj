@@ -21,6 +21,9 @@
     <Reference Include="Harmony">
       <HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Harmony">
+      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatchesHarmony.cs" />

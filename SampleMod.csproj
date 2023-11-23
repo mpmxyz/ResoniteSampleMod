@@ -10,7 +10,7 @@
     <Product>SampleMod</Product>
     <Description>A sample Resonite Mod</Description>
     <Copyright>CC0</Copyright>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
     <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
@@ -83,9 +83,6 @@
     </Reference>
     <Reference Include="ProtoFluxBindings">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\ProtoFluxBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="ResoniteModLoader">
-      <HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
     </Reference>
     <Reference Include="QuantityX">
       <HintPath>$(ResonitePath)\Resonite_Data\Managed\QuantityX.dll</HintPath>
