@@ -76,9 +76,9 @@ jobs:
         ASSEMBLY_NAME: ""
     - name: Check formatting
       run: |
-        dotnet format --no-restore --verbosidy diag --verify-no-changes "${{ env.PROJECT_FILE }}"
+        dotnet format --no-restore --verbosity diag --verify-no-changes "${{ env.PROJECT_FILE }}"
         echo "!!!"
-        dotnet format --no-restore --verbosidy diag --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
+        dotnet format --no-restore --verbosity diag --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
     - name: Test
       run: dotnet test --no-restore --verbosity normal --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
       env:
