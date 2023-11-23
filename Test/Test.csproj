@@ -10,6 +10,9 @@
     <Product>Test</Product>
     <Copyright>Copyright ©  2023</Copyright>
     <Configurations>Debug;Release</Configurations>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-All</AnalysisLevel>
+    <EnforceCodeStyleInBuild Condition="'$(CI)' == ''">true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <PropertyGroup>

@@ -17,6 +17,9 @@
 	<Configurations>Debug;Release</Configurations>
     <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">bin\Common</BaseOutputPath>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj\Common</BaseIntermediateOutputPath>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-All</AnalysisLevel>
+    <EnforceCodeStyleInBuild Condition="'$(CI)' == ''">true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <Target Name="CheckGithubVariables">
     <Error Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
