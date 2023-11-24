@@ -1,0 +1,22 @@
+{
+  "changelog": "string",
+  "releaseUrl": "string",
+  "conflicts": {
+    "mpmxyz.fake.conflict": {
+      version: "1.0.0"
+    }
+  },
+  "dependencies": {
+    "mpmxyz.fake.dependency": {
+      version: "1.0.0"
+    }
+  },
+  "artifacts": [
+    {
+      "url": `${{ github.repository_url }}/releases/download/${{ env.RELEASE_VERSION }}/${{TODO.filename}}.dll`,
+      "filename": "${{ TODO.filename }}.dll",
+      "sha256": "${{ TODO.sha256 }}",
+      "installLocation": "${{ TODO.sha256 }}"
+    }
+  ]
+}
