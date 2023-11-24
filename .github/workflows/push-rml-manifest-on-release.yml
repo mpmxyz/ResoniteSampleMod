@@ -1,0 +1,16 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Version"
+      name:
+        type: string
+        required: false
+        description: "Title"
+      description:
+        type: string
+        required: true
+        description: "Description of changes"
+        default: ""
