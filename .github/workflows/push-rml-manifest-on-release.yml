@@ -14,3 +14,31 @@ on:
         required: true
         description: "Description of changes"
         default: ""
+env:
+  CHECKOUT_PATH: "${{ github.workspace }}/repo"
+  RML_MANIFEST_PATH: "${{ github.workspace }}/manifest"
+  RML_MANIFEST_REPO: "${{ github.repository_owner }}/resonite-mod-manifest"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4.1.1
+        with:
+          path: "${{ env.CHECKOUT_PATH }}"
+      - name: "Checkout manifest"
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: "${{ env.RML_MANIFEST_REPO }}"
+          token: "${{ secrets.RML_MANIFEST_TOKEN }}"
+          path: "${{ env.RML_MANIFEST_PATH }}"
+      - name: "Create new branch"
+        run: git branch -c "${{ github.repository }}-${{ inputs.version }}"
+        working-directory: "${{ env.RML_MANIFEST_PATH }}"
+      - name: "Fill version Template"
+        run: echo "TODO"
+      - name: "Merge into mod manifest"
+        run: echo "TODO"
+      - name: "Push to manifest"
+        run: git push
+        working-directory: "${{ env.RML_MANIFEST_PATH }}"
