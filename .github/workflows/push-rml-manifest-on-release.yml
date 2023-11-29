@@ -1,3 +1,4 @@
+name: "Push RML Manifest"
 on:
   workflow_dispatch:
     inputs:
@@ -5,15 +6,10 @@ on:
         type: string
         required: true
         description: "Version"
-      name:
-        type: string
-        required: false
-        description: "Title"
       description:
         type: string
         required: true
         description: "Description of changes"
-        default: ""
 env:
   CHECKOUT_PATH: "${{ github.workspace }}/repo"
   RML_MANIFEST_PATH: "${{ github.workspace }}/manifest"
