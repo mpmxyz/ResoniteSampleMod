@@ -14,6 +14,8 @@ env:
   CHECKOUT_PATH: "${{ github.workspace }}/repo"
   RML_MANIFEST_PATH: "${{ github.workspace }}/manifest"
   RML_MANIFEST_REPO: "${{ github.repository_owner }}/resonite-mod-manifest"
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
