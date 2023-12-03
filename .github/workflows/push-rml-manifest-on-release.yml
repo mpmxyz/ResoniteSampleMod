@@ -72,11 +72,14 @@ jobs:
         with:
           source-file: "/tmp/filled-version-template.json"
           target-file: "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
-          target-path: "versions.${{ env.RELEASE_VERSION }}"
+          target-path: "versions.[\"${{ env.RELEASE_VERSION }}\"]"
 
       - name: "Debug output"
         run: cat "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
 
       - name: "Push to manifest"
-        run: git push
+        run: |
+          git add "manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+          git commit -m "Added v${{ env.RELEASE_VERSION }}"
+          git push
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
