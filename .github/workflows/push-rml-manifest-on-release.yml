@@ -46,7 +46,6 @@ jobs:
 
       - name: "Create hashes"
         run: |
-          sudo apt install sha256
           echo '[' > /tmp/hashes.json
           SEP=''
           grep -o '"url" *: *"[^"]*' /tmp/filled-version-template.json | grep -o '[^"]*$' | while read -r url ; do
