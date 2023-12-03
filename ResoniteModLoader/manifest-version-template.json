@@ -1,22 +1,28 @@
 {
-  "changelog": "string",
-  "releaseUrl": "string",
+  "changelog": "$RELEASE_DESCRIPTION",
+  "releaseUrl": "https://github.com/mpmxyz/ResoniteSampleMod/releases/tag/v$RELEASE_VERSION",
   "conflicts": {
     "mpmxyz.fake.conflict": {
-      version: "1.0.0"
+      "version": "1.0.0"
     }
   },
   "dependencies": {
     "mpmxyz.fake.dependency": {
-      version: "1.0.0"
+      "version": "1.0.0"
     }
   },
   "artifacts": [
     {
-      "url": `${{ github.repository_url }}/releases/download/${{ env.RELEASE_VERSION }}/${{TODO.filename}}.dll`,
-      "filename": "${{ TODO.filename }}.dll",
-      "sha256": "${{ TODO.sha256 }}",
-      "installLocation": "${{ TODO.sha256 }}"
+      "url": "$MOD_SERVER_URL/$MOD_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.dll",
+      "filename": "mpmxyz.SampleMod.dll",
+      "sha256": "will be filled automatically",
+      "installLocation": "rml_mods"
+    },
+    {
+      "url": "$MOD_SERVER_URL/$MOD_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.dll",
+      "filename": "mpmxyz.SampleMod.dll",
+      "sha256": "will be filled automatically",
+      "installLocation": "rml_mods"
     }
   ]
 }
