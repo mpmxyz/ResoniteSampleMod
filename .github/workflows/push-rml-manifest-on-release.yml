@@ -55,7 +55,7 @@ jobs:
           echo ']' >> /tmp/hashes.json
           #Debug output:
           cat /tmp/hashes.json
-          mkdir "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+          mkdir -r "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
       - name: "Merge hashes into version template"
         uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
         with:
