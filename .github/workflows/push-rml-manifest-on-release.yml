@@ -46,10 +46,11 @@ jobs:
 
       - name: "Create hashes"
         run: |
+          sudo apt install sha256
           echo '[' > /tmp/hashes.json
           SEP=''
           grep -o '"url" *: *"[^"]*' /tmp/filled-version-template.json | grep -o '[^"]*$' | while read -r url ; do
-            echo "$SEP{\"sha256\":\"$(wget -q -O - "$url" | sha256 -x)\"}" >> /tmp/hashes.json
+            echo "$SEP{\"sha256\":\"$(wget -q -O - "$url" | sha256sum -b | tr -d "\n *-")\"}" >> /tmp/hashes.json
             SEP=','
           done
           echo ']' >> /tmp/hashes.json
@@ -64,7 +65,7 @@ jobs:
           target-path: "artifacts"
 
       - name: "Create new branch"
-        run: git branch -c "${{ github.repository }}-${{ inputs.version }}"
+        run: git checkout -b "${{ github.repository }}-${{ inputs.version }}"
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
 
       - name: "Merge into mod manifest"
