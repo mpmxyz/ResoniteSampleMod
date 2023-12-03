@@ -1,0 +1,82 @@
+name: "Push RML Manifest"
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Version"
+      description:
+        type: string
+        required: true
+        description: "Description of changes"
+env:
+  MOD_SERVER_URL: "${{ github.server_url }}"
+  MOD_REPOSITORY: "${{ github.repository }}"
+  RML_AUTHOR_ID: "${{ github.repository_owner }}"
+  RML_MOD_ID: "SampleMod"
+  CHECKOUT_PATH: "${{ github.workspace }}/repo"
+  RML_MANIFEST_PATH: "${{ github.workspace }}/manifest"
+  RML_MANIFEST_REPO: "${{ github.repository_owner }}/resonite-mod-manifest"
+  RELEASE_VERSION: "${{ inputs.version }}"
+  RELEASE_DESCRIPTION: "${{ inputs.description }}"
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4.1.1
+        with:
+          path: "${{ env.CHECKOUT_PATH }}"
+
+      - name: "Checkout manifest"
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: "${{ env.RML_MANIFEST_REPO }}"
+          token: "${{ secrets.RML_MANIFEST_TOKEN }}"
+          path: "${{ env.RML_MANIFEST_PATH }}"
+
+      - name: "Fill mod version template"
+        uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
+        with:
+          source-file: "${{ env.CHECKOUT_PATH }}/ResoniteModLoader/manifest-version-template.json"
+          target-file: "/tmp/filled-version-template.json"
+
+      - name: "Create hashes"
+        run: |
+          echo '[' > /tmp/hashes.json
+          SEP=''
+          grep -o '"url" *: *"[^"]*' /tmp/filled-version-template.json | grep -o '[^"]*$' | while read -r url ; do
+            echo "$SEP{\"sha256\":\"$(wget -q -O - "$url" | sha256 -x)\"}" >> /tmp/hashes.json
+            SEP=','
+          done
+          echo ']' >> /tmp/hashes.json
+          #Debug output:
+          cat /tmp/hashes.json
+          mkdir "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+      - name: "Merge hashes into version template"
+        uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
+        with:
+          source-file: "/tmp/hashes.json"
+          target-file: "/tmp/filled-version-template.json"
+          target-path: "artifacts"
+
+      - name: "Create new branch"
+        run: git branch -c "${{ github.repository }}-${{ inputs.version }}"
+        working-directory: "${{ env.RML_MANIFEST_PATH }}"
+
+      - name: "Merge into mod manifest"
+        uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
+        with:
+          source-file: "/tmp/filled-version-template.json"
+          target-file: "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+          target-path: "versions.${{ env.RELEASE_VERSION }}"
+
+      - name: "Debug output"
+        run: cat "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+
+      - name: "Push to manifest"
+        run: git push
+        working-directory: "${{ env.RML_MANIFEST_PATH }}"
