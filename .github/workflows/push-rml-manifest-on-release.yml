@@ -64,7 +64,7 @@ jobs:
           target-path: "artifacts"
 
       - name: "Create new branch"
-        run: git checkout -b "${{ github.repository }}-${{ inputs.version }}"
+        run: git checkout -b "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ inputs.version }}"
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
 
       - name: "Merge into mod manifest"
@@ -83,5 +83,5 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git config user.name "${{ github.actor }}"
           git commit -m "Added v${{ env.RELEASE_VERSION }}"
-          git push
+          git push --set-upstream origin "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ inputs.version }}"
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
