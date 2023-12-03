@@ -80,6 +80,8 @@ jobs:
       - name: "Push to manifest"
         run: |
           git add "manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
           git commit -m "Added v${{ env.RELEASE_VERSION }}"
           git push
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
