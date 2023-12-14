@@ -1,0 +1,82 @@
+name: "Init Template"
+on:
+  workflow_dispatch:
+    inputs:
+      MOD_NAME:
+        type: string
+        required: true
+        description: "Mod name"
+      USER_NAME:
+        type: string
+        required: false
+        description: "User name"
+env:
+  REPO_FROM: "mpmxyz/ResoniteSampleMod"
+  REPO_KEY: "\"\"REPO\"\""
+  REPO_TO: "${{ github.repository }}"
+  HARMONY_FROM: "com.github.mpmxyz.SampleMod"
+  HARMONY_KEY: "\"\"MOD\"\""
+  HARMONY_TO: "com.github.${{ github.repository_owner }}.${{ inputs.MOD_NAME }}"
+  ASSEMBLY_FROM: "mpmxyz.SampleMod"
+  ASSEMBLY_KEY: "\"\"ASSEMBLY\"\""
+  ASSEMBLY_TO: "${{ github.repository_owner }}.${{ inputs.MOD_NAME }}"
+  MOD_FROM: "SampleMod"
+  MOD_KEY: "\"\"MOD\"\""
+  MOD_TO: "${{ inputs.MOD_NAME }}"
+  USER_FROM: "mpmxyz"
+  USER_KEY: "\"\"USER\"\""
+  USER_TO: "${{ inputs.USER_NAME || github.repository_owner }}"
+permissions:
+  contents: write
+jobs:
+  fill-template-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4.1.1
+
+      - name: "Create new branch"
+        run: |
+          git checkout -b "project-setup"
+
+      - name: "Escaped repository names"
+        id: escape-slashes
+        run: |
+          echo 'REPO_FROM="${{ env.REPO_FROM }}"' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
+          echo 'REPO_TO="${{ env.REPO_TO }}"' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
+
+      - name: "Debug output"
+        run: |
+          echo "${{ steps.escape-slashes.outputs.REPO_FROM }}"
+          echo "${{ steps.escape-slashes.outputs.REPO_TO }}"
+      - name: "Replace from sample to keys"
+        run: |
+          find . -exec sed -i \
+          -e 's/${{ steps.escape-slashes.outputs.REPO_FROM }}/${{ env.REPO_KEY }}/g' \
+          -e 's/${{ env.HARMONY_FROM }}/${{ env.HARMONY_KEY }}/g' \
+          -e 's/${{ env.ASSEMBLY_FROM }}/${{ env.ASSEMBLY_KEY }}/g' \
+          -e 's/${{ env.MOD_FROM }}/${{ env.MOD_KEY }}/g' \
+          -e 's/${{ env.USER_FROM }}/${{ env.USER_KEY }}/g' {} \;
+
+      - name: "Replace from key to target"
+        run: |
+          find . -exec sed -i \
+          -e 's/${{ env.REPO_KEY }}/${{ steps.escape-slashes.outputs.REPO_TO }}/g' \
+          -e 's/${{ env.HARMONY_KEY }}/${{ env.HARMONY_TO }}/g' \
+          -e 's/${{ env.ASSEMBLY_KEY }}/${{ env.ASSEMBLY_TO }}/g' \
+          -e 's/${{ env.MOD_KEY }}/${{ env.MOD_TO }}/g' \
+          -e 's/${{ env.USER_KEY }}/${{ env.USER_TO }}/g' {} \;
+
+      - name: "Rename files"
+        run: |
+          echo "TODO"
+
+      - name: "Push to manifest"
+        run: |
+          echo "TODO: remove original files from git"
+          git add .
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git commit -m "Initialized Template"
+          git push --set-upstream origin "project-setup"
+
