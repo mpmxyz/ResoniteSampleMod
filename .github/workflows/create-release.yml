@@ -75,6 +75,7 @@ jobs:
       id: check-manifest-token
       shell: bash
       run: |
+        #Source: https://stackoverflow.com/questions/70249519/how-to-check-if-a-secret-variable-is-empty-in-if-conditional-github-actions
         if [ "${{ secrets.RML_MANIFEST_TOKEN }}" != '' ]; then
           echo "exists=true" >> $GITHUB_OUTPUT;
         else
