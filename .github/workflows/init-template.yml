@@ -15,7 +15,7 @@ env:
   REPO_KEY: "\"\"REPO\"\""
   REPO_TO: "${{ github.repository }}"
   HARMONY_FROM: "com.github.mpmxyz.SampleMod"
-  HARMONY_KEY: "\"\"MOD\"\""
+  HARMONY_KEY: "\"\"HARMONY\"\""
   HARMONY_TO: "com.github.${{ github.repository_owner }}.${{ inputs.MOD_NAME }}"
   ASSEMBLY_FROM: "mpmxyz.SampleMod"
   ASSEMBLY_KEY: "\"\"ASSEMBLY\"\""
