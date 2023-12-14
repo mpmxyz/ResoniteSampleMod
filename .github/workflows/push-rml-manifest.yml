@@ -2,24 +2,36 @@ name: "Push RML Manifest"
 on:
   workflow_dispatch:
     inputs:
-      version:
+      RELEASE_VERSION:
         type: string
         required: true
         description: "Version"
-      description:
+      RELEASE_NOTES:
         type: string
         required: true
-        description: "Description of changes"
+        description: "Release Notes"
+  workflow_call:
+    inputs:
+      RELEASE_VERSION:
+        type: string
+        required: true
+        description: "Version"
+      RELEASE_NOTES:
+        type: string
+        required: true
+        description: "RELEASE_NOTES"
+    secrets:
+      RML_MANIFEST_TOKEN:
+        description: "Used to push the updated manifest."
+        required: true
 env:
-  MOD_SERVER_URL: "${{ github.server_url }}"
-  MOD_REPOSITORY: "${{ github.repository }}"
   RML_AUTHOR_ID: "${{ github.repository_owner }}"
   RML_MOD_ID: "SampleMod"
   CHECKOUT_PATH: "${{ github.workspace }}/repo"
   RML_MANIFEST_PATH: "${{ github.workspace }}/manifest"
   RML_MANIFEST_REPO: "${{ github.repository_owner }}/resonite-mod-manifest"
-  RELEASE_VERSION: "${{ inputs.version }}"
-  RELEASE_DESCRIPTION: "${{ inputs.description }}"
+  RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
+  RELEASE_DESCRIPTION: "${{ inputs.RELEASE_NOTES }}"
 permissions:
   contents: read
 jobs:
@@ -41,42 +53,42 @@ jobs:
       - name: "Fill mod version template"
         uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
         with:
-          source-file: "${{ env.CHECKOUT_PATH }}/ResoniteModLoader/manifest-version-template.json"
-          target-file: "/tmp/filled-version-template.json"
+          source-file: "${{ env.CHECKOUT_PATH }}/ResoniteModLoader/manifest-template.json"
+          target-file: "/tmp/filled-template.json"
 
       - name: "Create hashes"
         run: |
           echo '[' > /tmp/hashes.json
           SEP=''
-          grep -o '"url" *: *"[^"]*' /tmp/filled-version-template.json | grep -o '[^"]*$' | while read -r url ; do
+          grep -o '"url" *: *"[^"]*' /tmp/filled-template.json | grep -o '[^"]*$' | while read -r url ; do
             echo "$SEP{\"sha256\":\"$(wget -q -O - "$url" | sha256sum -b | tr -d "\n *-")\"}" >> /tmp/hashes.json
             SEP=','
           done
           echo ']' >> /tmp/hashes.json
-          #Debug output:
-          cat /tmp/hashes.json
-          mkdir -p "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}"
+
       - name: "Merge hashes into version template"
         uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
         with:
           source-file: "/tmp/hashes.json"
-          target-file: "/tmp/filled-version-template.json"
-          target-path: "artifacts"
+          target-file: "/tmp/filled-template.json"
+          target-path: "versions[\"${{ env.RELEASE_VERSION }}\"].artifacts"
 
       - name: "Create new branch"
         run: |
-          git checkout -b "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ inputs.version }}"
+          git checkout -b "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ env.RELEASE_VERSION }}"
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
+
+      - name: "Ensure mod manifest directory and display completed template"
+        run: |
+          mkdir -p "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}"
+          #Debug output of filled template
+          cat "/tmp/filled-template.json"
 
       - name: "Merge into mod manifest"
         uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
         with:
-          source-file: "/tmp/filled-version-template.json"
+          source-file: "/tmp/filled-template.json"
           target-file: "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
-          target-path: "versions[\"${{ env.RELEASE_VERSION }}\"]"
-
-      - name: "Debug output"
-        run: cat "${{ env.RML_MANIFEST_PATH }}/manifest/${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}/info.json"
 
       - name: "Push to manifest"
         run: |
@@ -84,5 +96,5 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git config user.name "${{ github.actor }}"
           git commit -m "Added v${{ env.RELEASE_VERSION }}"
-          git push --set-upstream origin "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ inputs.version }}"
+          git push --set-upstream origin "${{ env.RML_AUTHOR_ID }}/${{ env.RML_MOD_ID }}-${{ env.RELEASE_VERSION }}"
         working-directory: "${{ env.RML_MANIFEST_PATH }}"
