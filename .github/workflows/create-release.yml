@@ -89,7 +89,7 @@ jobs:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
     secrets: 
-      RML_MANIFEST_TOKEN: "${{ env.RML_MANIFEST_TOKEN }}"
+      RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
 
 
   push-nuget:
