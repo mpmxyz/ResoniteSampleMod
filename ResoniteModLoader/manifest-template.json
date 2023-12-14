@@ -9,16 +9,6 @@
     "$RELEASE_VERSION": {
       "changelog": "$RELEASE_DESCRIPTION",
       "releaseUrl": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v$RELEASE_VERSION",
-      "conflicts": {
-        "mpmxyz.fake.conflict": {
-          "version": "1.0.0"
-        }
-      },
-      "dependencies": {
-        "mpmxyz.fake.dependency": {
-          "version": "1.0.0"
-        }
-      },
       "artifacts": [
         {
           "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.dll",
