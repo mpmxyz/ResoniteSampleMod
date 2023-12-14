@@ -25,12 +25,6 @@
           "filename": "mpmxyz.SampleMod.dll",
           "sha256": "will be filled automatically",
           "installLocation": "rml_mods"
-        },
-        {
-          "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.dll",
-          "filename": "mpmxyz.SampleMod.dll",
-          "sha256": "will be filled automatically",
-          "installLocation": "rml_mods"
         }
       ]
     }
