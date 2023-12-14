@@ -84,7 +84,7 @@ jobs:
   push-rml-manifest:
     uses: ./.github/workflows/push-rml-manifest.yml
     needs: create-github-release
-    if: "${{ needs.create-github-release.outputs.exists == 'true' }}"
+    if: "${{ needs.create-github-release.outputs.TRIGGER_RML_PUSH == 'true' }}"
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
