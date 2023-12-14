@@ -30,6 +30,7 @@ on:
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
+  RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
 name: "Create Release"
 jobs:
   compile-rml:
@@ -48,10 +49,13 @@ jobs:
       RELEASE_NOTES: "${{ inputs.description }}"
     secrets: 
       RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
-  create-release:
+
+  create-github-release:
     if: ${{ inputs.release-rml }}
     runs-on: ubuntu-latest
     needs: compile-rml
+    outputs:
+      TRIGGER_RML_PUSH: ${{ steps.check-manifest-token.outputs.exists }}
     steps:
     - name: Download RML build artifacts
       uses: actions/download-artifact@v3.0.2
@@ -67,6 +71,27 @@ jobs:
         name: "${{ inputs.name || inputs.version }}"
         tag: "v${{ inputs.version }}"
         commit: "${{ github.ref }}"
+    - name: Check manifest token to decide on next step
+      id: check-manifest-token
+      shell: bash
+      run: |
+        #Source: https://stackoverflow.com/questions/70249519/how-to-check-if-a-secret-variable-is-empty-in-if-conditional-github-actions
+        if [ "${{ secrets.RML_MANIFEST_TOKEN }}" != '' ]; then
+          echo "exists=true" >> $GITHUB_OUTPUT;
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT;
+        fi
+  push-rml-manifest:
+    uses: ./.github/workflows/push-rml-manifest.yml
+    needs: create-github-release
+    if: "${{ needs.create-github-release.outputs.TRIGGER_RML_PUSH == 'true' }}"
+    with:
+      RELEASE_VERSION: "${{ inputs.version }}"
+      RELEASE_NOTES: "${{ inputs.description }}"
+    secrets: 
+      RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
+
+
   push-nuget:
     if: ${{ inputs.release-monkey }}
     runs-on: ubuntu-latest
