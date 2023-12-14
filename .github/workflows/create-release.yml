@@ -30,6 +30,7 @@ on:
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
+  RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
 name: "Create Release"
 jobs:
   compile-rml:
@@ -69,14 +70,14 @@ jobs:
         tag: "v${{ inputs.version }}"
         commit: "${{ github.ref }}"
   push-rml-manifest:
-    if: "${{ secrets.RML_MANIFEST_TOKEN != '' }}"
+    if: "${{ env.RML_MANIFEST_TOKEN != '' }}"
     uses: ./.github/workflows/push-rml-manifest.yml
     needs: create-github-release
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
     secrets: 
-      RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
+      RML_MANIFEST_TOKEN: "${{ env.RML_MANIFEST_TOKEN }}"
 
 
   push-nuget:
