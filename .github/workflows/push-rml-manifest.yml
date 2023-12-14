@@ -35,7 +35,7 @@ env:
 permissions:
   contents: read
 jobs:
-  test:
+  create-and-push-manifest:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
