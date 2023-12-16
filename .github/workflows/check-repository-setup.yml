@@ -60,7 +60,7 @@ jobs:
 
     - name: Create Issue with TODOs
       if: "${{ steps.manifest-token.outcome != 'success' || steps.resonite-token.outcome != 'success' || steps.manifest-repo.outcome != 'success' || steps.resonite-repo.outcome != 'success' }}"
-      uses: dacbd/create-issue-action@main
+      uses: dacbd/create-issue-action@ba4d1c45cccf9c483f2720cefb40e437f0ee6f7d
       with:
         token: ${{ github.token }}
         title: Setup repository to support full CI/CD
