@@ -10,6 +10,11 @@ on:
         type: string
         required: false
         description: "User name"
+      FORCE_VERSION:
+        type: string
+        required: false
+        default: "1.0.0"
+        description: "Force version number"
 env:
   REPO_FROM: "mpmxyz/ResoniteSampleMod"
   REPO_KEY: "\"\"REPO\"\""
@@ -80,6 +85,11 @@ jobs:
           -e 's/${{ env.MOD_KEY }}/${{ env.MOD_TO }}/g' \
           -e 's/${{ env.USER_KEY }}/${{ env.USER_TO }}/g' \
           {} \;
+
+      - name: "Force version number"
+        if: "${{ inputs.FORCE_VERSION != '' }}"
+        run: |
+          sed -i 's/<Version>[^<]*</Version>/<Version>${{ inputs.FORCE_VERSION }}</Version>/g' SampleMod.csproj
 
       - name: "Rename files"
         run: |
