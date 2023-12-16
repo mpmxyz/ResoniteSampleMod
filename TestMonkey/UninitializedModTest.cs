@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MonkeyLoader.Patching;
 
 namespace SampleMod
 {
@@ -8,7 +9,7 @@ namespace SampleMod
         [TestMethod]
         public void TestModHasNonEmptyName()
         {
-            var mod = SampleModMonkey.Instance;
+            var mod = MonkeyBase<SampleModMonkey>.Instance;
             Assert.IsNotNull(mod.Name);
             Assert.AreNotEqual("", mod.Name);
         }
