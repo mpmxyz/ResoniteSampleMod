@@ -86,7 +86,7 @@ jobs:
     - name: Test
       run: |
         dotnet test --no-restore --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
-        dotnet test --no-restore --configuration "Release" "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
+        dotnet test --no-restore --configuration "Debug" "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
       env:
         ASSEMBLY_NAME: ""
     - name: Build
