@@ -47,6 +47,12 @@
 		<Folder Include="Properties\" />
 	</ItemGroup>
 	<ItemGroup>
+		<Reference Include="Harmony">
+			<HintPath>$(ResonitePath)\rml_libs\0Harmony.dll</HintPath>
+		</Reference>
+		<Reference Include="ResoniteModLoader">
+			<HintPath>$(ResonitePath)\Libraries\ResoniteModLoader.dll</HintPath>
+		</Reference>
 		<ProjectReference Include="..\SampleModRML.csproj" />
 	</ItemGroup>
 </Project>

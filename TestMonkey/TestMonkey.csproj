@@ -44,6 +44,9 @@
 		<Compile Remove="obj\Common\Release\net472\TestMonkey.AssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
+		<Reference Include="Harmony">
+			<HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
+		</Reference>
 		<Reference Include="MonkeyLoader">
 			<HintPath>$(ResonitePath)\MonkeyLoader.dll</HintPath>
 		</Reference>

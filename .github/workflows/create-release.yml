@@ -12,11 +12,11 @@ on:
         type: string
         required: false
         description: "Title"
+        default: ""
       description:
         type: string
         required: true
         description: "Description of changes"
-        default: ""
       release-rml:
         type: boolean
         required: false
@@ -30,12 +30,23 @@ on:
 env:
   NUGET_PUBLISH_TARGET: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
   ARTIFACT_NAME: SampleMod
-  RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
 name: "Create Release"
 jobs:
+  check-inputs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Check version format"
+      env:
+        RELEASE_VERSION: "${{ inputs.version }}"
+      shell: bash
+      run: |
+        # https://semver.org/ applied to https://stackoverflow.com/questions/21112707/check-if-a-string-matches-a-regex-in-bash-script
+        [[ "$RELEASE_VERSION" =~ ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-((0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?$ ]]
+
   compile-rml:
     if: ${{ inputs.release-rml }}
     uses: ./.github/workflows/build-rml.yml
+    needs: check-inputs
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
@@ -44,6 +55,7 @@ jobs:
   compile-monkey:
     if: ${{ inputs.release-monkey }}
     uses: ./.github/workflows/build-monkey.yml
+    needs: check-inputs
     with:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
