@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MonkeyLoader.Patching;
-using System;
 
 namespace SampleMod
 {
