@@ -26,8 +26,10 @@ env:
   USER_FROM: "mpmxyz"
   USER_KEY: "\"\"USER\"\""
   USER_TO: "${{ inputs.USER_NAME || github.repository_owner }}"
+
 permissions:
   contents: write
+
 jobs:
   fill-template-and-push:
     runs-on: ubuntu-latest
@@ -44,6 +46,8 @@ jobs:
         run: |
           echo 'REPO_FROM=${{ env.REPO_FROM }}' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
           echo 'REPO_TO=${{ env.REPO_TO }}' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
+          echo 'MOD_FROM=${{ env.MOD_FROM }}' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
+          echo 'MOD_TO=${{ env.MOD_TO }}' | sed -e 's=/=\\/=g' >> "$GITHUB_OUTPUT"
 
       - name: "Debug output"
         run: |
@@ -56,7 +60,8 @@ jobs:
 
       - name: "Replace from sample to keys"
         run: |
-          find . -not \( -path ./.git -prune \) -not \( -path ./.github -prune \) -exec sed -i \
+          find . ! \( -path ./.git -prune \) ! \( -path ./.github -prune \) \
+          -exec sed -i \
           -e 's/${{ steps.escape-slashes.outputs.REPO_FROM }}/${{ env.REPO_KEY }}/g' \
           -e 's/${{ env.HARMONY_FROM }}/${{ env.HARMONY_KEY }}/g' \
           -e 's/${{ env.ASSEMBLY_FROM }}/${{ env.ASSEMBLY_KEY }}/g' \
@@ -66,7 +71,8 @@ jobs:
 
       - name: "Replace from key to target"
         run: |
-          find . -not \( -path ./.git -prune \) -not \( -path ./.github -prune \) -exec sed -i \
+          find . ! \( -path ./.git -prune \) ! \( -path ./.github -prune \) \
+          -exec sed -i \
           -e 's/${{ env.REPO_KEY }}/${{ steps.escape-slashes.outputs.REPO_TO }}/g' \
           -e 's/${{ env.HARMONY_KEY }}/${{ env.HARMONY_TO }}/g' \
           -e 's/${{ env.ASSEMBLY_KEY }}/${{ env.ASSEMBLY_TO }}/g' \
@@ -76,14 +82,21 @@ jobs:
 
       - name: "Rename files"
         run: |
-          echo "TODO"
+          find . ! \( -path ./.git -prune \) ! \( -path ./.github -prune \) -name '*${{ steps.escape-slashes.outputs.MOD_FROM }}*' -type f -print0 | \
+          xargs -0 -I {} sh -c 'mv "{}" "$(dirname "{}")/`echo $(basename "{}") | sed 's/${{ steps.escape-slashes.outputs.MOD_FROM }}/${{ steps.escape-slashes.outputs.MOD_TO }}/g'`"'
 
       - name: "Push to manifest"
         run: |
-          echo "TODO: remove original files from git"
           git add .
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git config user.name "${{ github.actor }}"
           git commit -m "Initialized Template"
           git push --set-upstream origin "project-setup"
 
+  create-todo-issues:
+    uses: ./.github/workflows/check-repository-setup.yml
+    secrets:
+      RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
+      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
+    
+    

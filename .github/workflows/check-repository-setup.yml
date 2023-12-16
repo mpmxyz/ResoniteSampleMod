@@ -1,0 +1,77 @@
+name: "Check repository setup"
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      RML_MANIFEST_TOKEN:
+        required: true
+      RESONITE_CLONE_TOKEN:
+        required: true
+
+env:
+  RML_MANIFEST_REPO: "${{ github.repository_owner }}/resonite-mod-manifest"
+  RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
+
+permissions:
+  issues: write
+
+jobs:  
+  create-todo-issues:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check RESONITE_CLONE_TOKEN exists
+      continue-on-error: true
+      id: resonite-token
+      shell: bash
+      run: |
+        if [ "${{ secrets.RESONITE_CLONE_TOKEN }}" == '' ]; then
+          exit 1;
+        fi
+
+    - name: Check RML_MANIFEST_TOKEN exists
+      continue-on-error: true
+      id: manifest-token
+      shell: bash
+      run: |
+        if [ "${{ secrets.RML_MANIFEST_TOKEN }}" == '' ]; then
+          exit 1;
+        fi
+
+    - name: Check if repository ${{ env.RESONITE_CLONE_REPO }} exists
+      if: "${{ steps.resonite-token.outcome == 'success' }}"
+      continue-on-error: true
+      id: resonite-repo
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.RESONITE_CLONE_REPO }}
+        token: ${{ secrets.RESONITE_CLONE_TOKEN }}
+        path: /tmp/resonite
+
+    - name: Check if repository ${{ env.RML_MANIFEST_REPO }} exists
+      id: manifest-repo
+      if: "${{ steps.manifest-token.outcome == 'success' }}"
+      continue-on-error: true
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.RML_MANIFEST_REPO }}
+        token: ${{ secrets.RML_MANIFEST_TOKEN }}
+        path: /tmp/manifest
+
+    - name: Create Issue with TODOs
+      if: "${{ steps.manifest-token.outcome != 'success' || steps.resonite-token.outcome != 'success' || steps.manifest-repo.outcome != 'success' || steps.resonite-repo.outcome != 'success' }}"
+      uses: dacbd/create-issue-action@main
+      with:
+        token: ${{ github.token }}
+        title: Setup repository to support full CI/CD
+        body: |
+          ### Necessary actions:
+          - [${{ steps.manifest-token.outcome == 'success' && 'X' || ' ' }}] Add RML_MANIFEST_TOKEN
+          - [${{ steps.manifest-repo.outputs == 'success' && 'X' || ' ' }}] Make sure a RML manifest repository is set up that is a fork of the [Resonite Mod Manifest](https://github.com/resonite-modding-group/resonite-mod-manifest)
+          - [${{ steps.resonite-token.outputs == 'success' && 'X' || ' ' }}] Add RESONITE_CLONE_TOKEN
+          - [${{ steps.resonite-repo.outputs == 'success' && 'X' || ' ' }}] Make sure a repository with Resonite files exists
+            For licensing reasons this should be a private repository that can only be accessed using the RESONITE_CLONE_TOKEN.
+            It should contain the directory `Resonite` with all engine dll files in the same hierarchy as they appear in a Resonite install.
+            You can use the Windows-only script [update-ResoniteFiles.cmd](${{ github.server_url }}/${{ github.repository }}/blob/main/update-ResoniteFiles.cmd) to keep your private Resonite repository up to date with your local install.
+            Hopefully this will be resolved with official sources in the future.
+        assignees: ${{ github.repository_owner }}

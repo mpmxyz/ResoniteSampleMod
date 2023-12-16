@@ -1,4 +1,4 @@
-﻿<Project InitialTargets="CheckGithubVariables" Sdk="Microsoft.NET.Sdk">
+﻿<Project InitialTargets="CheckGithubVariables;CheckVariables" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <Product>SampleMod</Product>
     <Description>A sample Resonite Mod</Description>
     <Copyright>CC0</Copyright>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
     <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
@@ -20,10 +20,20 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest-All</AnalysisLevel>
     <EnforceCodeStyleInBuild Condition="'$(CI)' == ''">true</EnforceCodeStyleInBuild>
+	<DefaultResonitePath>C:\Program Files (x86)\Steam\steamapps\common\Resonite</DefaultResonitePath>
+	<ResonitePath Condition="'$(ResonitePath)' == '' And Exists('$(DefaultResonitePath)')">$(DefaultResonitePath)</ResonitePath>
+	<StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+	<StartArguments Condition="'$(ResoniteCache)' != ''">$(StartArguments) -CachePath "$(ResoniteCache)"</StartArguments>
+	<StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <Target Name="CheckGithubVariables">
-    <Error Condition="$(RELEASE_VERSION) != '' And $(RELEASE_VERSION) != $(Version)" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
-    <Error Condition="$(ASSEMBLY_NAME) != '' And $(ASSEMBLY_NAME) != $(AssemblyName)" Text="Difference between built 'AssemblyName' ($(AssemblyName)) and 'ASSEMBLY_NAME' expected by github! ($(ASSEMBLY_NAME))&#xD;&#xA;Ensure that the names in the csproj file and in your workflow environment match!" />
+    <Error Condition="'$(RELEASE_VERSION)' != '' And '$(RELEASE_VERSION)' != '$(Version)'" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
+    <Error Condition="'$(ASSEMBLY_NAME)' != '' And '$(ASSEMBLY_NAME)' != '$(AssemblyName)'" Text="Difference between built 'AssemblyName' ($(AssemblyName)) and 'ASSEMBLY_NAME' expected by github! ($(ASSEMBLY_NAME))&#xD;&#xA;Ensure that the names in the csproj file and in your workflow environment match!" />
+  </Target>
+  <Target Name="CheckVariables">
+    <Error Condition="'$(ResonitePath)' == ''" Text="Missing environment variable 'ResonitePath'!" />
+    <Warning Condition="'$(ResoniteCache)' == '' And '$(CI)' == ''" Text="Missing environment variable 'ResoniteCache': Default location may cause long Windows boot times." />
+    <Error Condition="!Exists('$(ResonitePath)')" Text="Invalid Resonite path '$(ResonitePath)'!" />
   </Target>
   <Target Name="EnsureMonkeyModsDirectory" BeforeTargets="Restore;CollectPackageReferences" Condition="!Exists('$(MSBuildProjectDirectory)\MonkeyLoader Mods')">
     <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="mkdir &quot;$(MSBuildProjectDirectory)\MonkeyLoader Mods&quot;" />

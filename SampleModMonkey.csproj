@@ -3,9 +3,7 @@
     <BaseOutputPath>bin\MonkeyLoader</BaseOutputPath>
     <BaseIntermediateOutputPath>obj\MonkeyLoader</BaseIntermediateOutputPath>
     <StartAction>Program</StartAction>
-    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
-    <StartArguments>-Screen -CachePath "$(ResoniteCache)"</StartArguments>
-    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+    <StartArguments>-Screen</StartArguments>
     <VariantSuffix>MonkeyLoader</VariantSuffix>
   </PropertyGroup>
   <Import Project="./SampleMod.csproj" />
