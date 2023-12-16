@@ -78,7 +78,7 @@ jobs:
       uses: "ncipollo/release-action@6c75be85e571768fa31b40abf38de58ba0397db5"
       with:
         artifactErrorsFailBuild: true
-        artifacts: "tmp/**.*"
+        artifacts: "tmp/*.*,tmp/*/*.*"
         body: "${{ inputs.description }}"
         name: "${{ inputs.name || inputs.version }}"
         tag: "v${{ inputs.version }}"
