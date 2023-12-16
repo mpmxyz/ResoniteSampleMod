@@ -89,7 +89,7 @@ jobs:
       - name: "Force version number"
         if: "${{ inputs.FORCE_VERSION != '' }}"
         run: |
-          sed -i 's/<Version>[^<]*</Version>/<Version>${{ inputs.FORCE_VERSION }}</Version>/g' SampleMod.csproj
+          sed -i -e 's=<Version>[^<]*</Version>=<Version>${{ inputs.FORCE_VERSION }}</Version>=g' SampleMod.csproj
 
       - name: "Rename files"
         run: |
