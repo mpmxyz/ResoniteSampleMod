@@ -20,7 +20,7 @@ jobs:
   create-todo-issues:
     runs-on: ubuntu-latest
     steps:
-    - name: Check RESONITE_CLONE_TOKEN exists
+    - name: "Check RESONITE_CLONE_TOKEN exists"
       continue-on-error: true
       id: resonite-token
       shell: bash
@@ -29,7 +29,7 @@ jobs:
           exit 1;
         fi
 
-    - name: Check RML_MANIFEST_TOKEN exists
+    - name: "Check RML_MANIFEST_TOKEN exists"
       continue-on-error: true
       id: manifest-token
       shell: bash
@@ -38,7 +38,7 @@ jobs:
           exit 1;
         fi
 
-    - name: Check if repository ${{ env.RESONITE_CLONE_REPO }} exists
+    - name: "Check if repository ${{ env.RESONITE_CLONE_REPO }} exists"
       if: "${{ steps.resonite-token.outcome == 'success' }}"
       continue-on-error: true
       id: resonite-repo
@@ -48,7 +48,7 @@ jobs:
         token: ${{ secrets.RESONITE_CLONE_TOKEN }}
         path: resonite
 
-    - name: Check if repository ${{ env.RML_MANIFEST_REPO }} exists
+    - name: "Check if repository ${{ env.RML_MANIFEST_REPO }} exists"
       id: manifest-repo
       if: "${{ steps.manifest-token.outcome == 'success' }}"
       continue-on-error: true
@@ -57,9 +57,17 @@ jobs:
         repository: ${{ env.RML_MANIFEST_REPO }}
         token: ${{ secrets.RML_MANIFEST_TOKEN }}
         path: manifest
+        
+    - name: "Check that no directory .github_new exists (unfinished template initialization)"
+      id: github-new
+      continue-on-error: true
+      run: |
+        if [ cd .github_new ]; then
+          exit 1;
+        fi
 
     - name: Create Issue with TODOs
-      if: "${{ steps.manifest-token.outcome != 'success' || steps.resonite-token.outcome != 'success' || steps.manifest-repo.outcome != 'success' || steps.resonite-repo.outcome != 'success' }}"
+      if: "${{ steps.manifest-token.outcome != 'success' || steps.resonite-token.outcome != 'success' || steps.manifest-repo.outcome != 'success' || steps.resonite-repo.outcome != 'success' || steps.github-new.outcome != 'success' }}"
       uses: dacbd/create-issue-action@ba4d1c45cccf9c483f2720cefb40e437f0ee6f7d
       with:
         token: ${{ github.token }}
@@ -74,4 +82,6 @@ jobs:
             It should contain the directory `Resonite` with all engine dll files in the same hierarchy as they appear in a Resonite install.
             You can use the Windows-only script [update-ResoniteFiles.cmd](${{ github.server_url }}/${{ github.repository }}/blob/main/update-ResoniteFiles.cmd) to keep your private Resonite repository up to date with your local install.
             Hopefully this will be resolved with official sources in the future.
+          - [${{ steps.resonite-repo.outcome == 'success' && 'X' || ' ' }}] Update workflows to finish template initialization (overwrite `.github` with `.github_new`)
+            This step is necessary since for security reasons workflows are not directly allowed to modify workflows.
         assignees: ${{ github.repository_owner }}
