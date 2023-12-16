@@ -85,7 +85,6 @@ jobs:
         ASSEMBLY_NAME: ""
     - name: Test
       run: |
-        mono --version
         dotnet test --no-restore --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
         dotnet test --no-restore --configuration "Debug" "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
       env:
