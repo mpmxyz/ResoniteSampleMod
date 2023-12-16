@@ -10,9 +10,7 @@ namespace SampleMod
         [TestMethod]
         public void TestModHasNonEmptyName()
         {
-            Assert.Fail("Befor Test");
-
-            var mod = MonkeyBase<SampleModMonkey>.Instance;
+            var mod = SampleModMonkey.Instance;
             Assert.IsNotNull(mod.Name);
             Assert.AreNotEqual("", mod.Name);
         }
