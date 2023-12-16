@@ -26,8 +26,10 @@ env:
   USER_FROM: "mpmxyz"
   USER_KEY: "\"\"USER\"\""
   USER_TO: "${{ inputs.USER_NAME || github.repository_owner }}"
+
 permissions:
   contents: write
+
 jobs:
   fill-template-and-push:
     runs-on: ubuntu-latest
@@ -91,3 +93,10 @@ jobs:
           git commit -m "Initialized Template"
           git push --set-upstream origin "project-setup"
 
+  create-todo-issues:
+    uses: ./.github/workflows/check-repository-setup.yml
+    secrets:
+      RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
+      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
+    
+    
