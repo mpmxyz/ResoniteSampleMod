@@ -16,6 +16,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModMonkey", "SampleMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModRML", "SampleModRML.csproj", "{0A214F6D-07FD-49F5-B19A-7463485B685F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRML", "TestRML\TestRML.csproj", "{EEC62D32-AB07-43D7-A5CF-620A8272DB48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMonkey", "TestMonkey\TestMonkey.csproj", "{2D0D49C6-6191-4126-B833-5A0D996F7034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
@@ -38,6 +42,14 @@ Global
 		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Debug|AnyCPU.Build.0 = Debug|Any CPU
 		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Release|AnyCPU.ActiveCfg = Release|Any CPU
 		{0A214F6D-07FD-49F5-B19A-7463485B685F}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{EEC62D32-AB07-43D7-A5CF-620A8272DB48}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{EEC62D32-AB07-43D7-A5CF-620A8272DB48}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{EEC62D32-AB07-43D7-A5CF-620A8272DB48}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{EEC62D32-AB07-43D7-A5CF-620A8272DB48}.Release|AnyCPU.Build.0 = Release|Any CPU
+		{2D0D49C6-6191-4126-B833-5A0D996F7034}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{2D0D49C6-6191-4126-B833-5A0D996F7034}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{2D0D49C6-6191-4126-B833-5A0D996F7034}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{2D0D49C6-6191-4126-B833-5A0D996F7034}.Release|AnyCPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

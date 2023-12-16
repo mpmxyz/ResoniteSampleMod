@@ -8,3 +8,7 @@
 /*.nupkg
 /MonkeyLoader Mods/*
 /MonkeyLoader GamePacks/*
+/TestMonkey/obj
+/TestMonkey/bin
+/TestRML/obj
+/TestRML/bin

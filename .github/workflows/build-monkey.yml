@@ -32,6 +32,7 @@ env:
   RELEASE_VERSION: "${{ inputs.RELEASE_VERSION }}"
   OUTPUT_FOLDER: "bin/MonkeyLoader/Release"
   TEST_PROJECT_FILE: "Test/Test.csproj"
+  MOD_LOADER_TEST_PROJECT_FILE: "TestMonkey/TestMonkey.csproj"
   RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
   run:
@@ -72,16 +73,20 @@ jobs:
       run: |
         dotnet restore "${{ env.PROJECT_FILE }}"
         dotnet restore "${{ env.TEST_PROJECT_FILE }}"
+        dotnet restore "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
       env:
         ASSEMBLY_NAME: ""
     - name: Check formatting
       run: |
         dotnet format --no-restore --verify-no-changes "${{ env.PROJECT_FILE }}"
         dotnet format --no-restore --verify-no-changes "${{ env.TEST_PROJECT_FILE }}"
+        dotnet format --no-restore --verify-no-changes "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
       env:
         ASSEMBLY_NAME: ""
     - name: Test
-      run: dotnet test --no-restore --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
+      run: |
+        dotnet test --no-restore --configuration "Release" "${{ env.TEST_PROJECT_FILE }}"
+        dotnet test --no-restore --configuration "Release" "${{ env.MOD_LOADER_TEST_PROJECT_FILE }}"
       env:
         ASSEMBLY_NAME: ""
     - name: Build

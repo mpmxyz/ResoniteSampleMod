@@ -14,17 +14,17 @@
     <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
     <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
-	<Configurations>Debug;Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">bin\Common</BaseOutputPath>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj\Common</BaseIntermediateOutputPath>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest-All</AnalysisLevel>
     <EnforceCodeStyleInBuild Condition="'$(CI)' == ''">true</EnforceCodeStyleInBuild>
-	<DefaultResonitePath>C:\Program Files (x86)\Steam\steamapps\common\Resonite</DefaultResonitePath>
-	<ResonitePath Condition="'$(ResonitePath)' == '' And Exists('$(DefaultResonitePath)')">$(DefaultResonitePath)</ResonitePath>
-	<StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
-	<StartArguments Condition="'$(ResoniteCache)' != ''">$(StartArguments) -CachePath "$(ResoniteCache)"</StartArguments>
-	<StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
+    <DefaultResonitePath>C:\Program Files (x86)\Steam\steamapps\common\Resonite</DefaultResonitePath>
+    <ResonitePath Condition="'$(ResonitePath)' == '' And Exists('$(DefaultResonitePath)')">$(DefaultResonitePath)</ResonitePath>
+    <StartProgram>$(ResonitePath)\Resonite.exe</StartProgram>
+    <StartArguments Condition="'$(ResoniteCache)' != ''">$(StartArguments) -CachePath "$(ResoniteCache)"</StartArguments>
+    <StartWorkingDirectory>$(ResonitePath)</StartWorkingDirectory>
   </PropertyGroup>
   <Target Name="CheckGithubVariables">
     <Error Condition="'$(RELEASE_VERSION)' != '' And '$(RELEASE_VERSION)' != '$(Version)'" Text="Difference between version being built ($(Version)) and version being published on the github flow! ($(RELEASE_VERSION))&#xD;&#xA;Ensure that the versions in the csproj file and in your release flow trigger match!" />
@@ -51,14 +51,20 @@
     <Compile Remove="MonkeyLoader GamePacks\**" />
     <Compile Remove="MonkeyLoader Mods\**" />
     <Compile Remove="Test\**" />
+    <Compile Remove="TestRML\**" />
+    <Compile Remove="TestMonkey\**" />
     <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="MonkeyLoader GamePacks\**" />
     <EmbeddedResource Remove="MonkeyLoader Mods\**" />
     <EmbeddedResource Remove="Test\**" />
+    <EmbeddedResource Remove="TestRML\**" />
+    <EmbeddedResource Remove="TestMonkey\**" />
     <None Remove="bin\**" />
     <None Remove="MonkeyLoader GamePacks\**" />
     <None Remove="MonkeyLoader Mods\**" />
     <None Remove="Test\**" />
+    <None Remove="TestRML\**" />
+    <None Remove="TestMonkey\**" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -102,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Test" />
+    <InternalsVisibleTo Include="TestRML" />
+    <InternalsVisibleTo Include="TestMonkey" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="obj\MonkeyLoader\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
@@ -126,6 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Remove="Test" />
+    <Folder Remove="TestRML" />
+    <Folder Remove="TestMonkey" />
     <Compile Remove="SampleModRML.cs" />
     <Compile Remove="SampleModMonkey.cs" />
   </ItemGroup>
