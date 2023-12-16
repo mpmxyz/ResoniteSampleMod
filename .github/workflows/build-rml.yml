@@ -98,10 +98,10 @@ jobs:
         #mkdir -p "archive/rml_libs"
         #cp LIB.dll "archive/rml_libs/LIB.dll"
         cd archive
-        zip -r "../${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
+        zip -r "${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip" .
     - name: Upload build artifacts
       if: ${{ inputs.RELEASE_VERSION }}
       uses: actions/upload-artifact@v3.1.3
       with: 
         name: "${{ env.ARTIFACT_NAME }}-ResoniteModLoader"
-        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER }}/${{ env.ARTIFACT_NAME }}-ResoniteModLoader.zip"
+        path: "${{ env.PROJECT_PATH }}/${{ env.OUTPUT_FOLDER }}/archive"
