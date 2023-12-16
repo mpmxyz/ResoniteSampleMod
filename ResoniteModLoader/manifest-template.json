@@ -11,8 +11,8 @@
       "releaseUrl": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v$RELEASE_VERSION",
       "artifacts": [
         {
-          "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.dll",
-          "filename": "mpmxyz.SampleMod.dll",
+          "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$RELEASE_VERSION/mpmxyz.SampleMod.ResoniteModLoader.dll",
+          "filename": "mpmxyz.SampleMod.ResoniteModLoader.dll",
           "sha256": "will be filled automatically",
           "installLocation": "rml_mods"
         }
