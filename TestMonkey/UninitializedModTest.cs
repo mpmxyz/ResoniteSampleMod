@@ -10,6 +10,7 @@ namespace SampleMod
         [TestMethod]
         public void TestModHasNonEmptyName()
         {
+#pragma warning disable CA1303 // Do not pass literals as localized parameters
             Console.WriteLine("Before Test!");
             Console.Out.Flush();
 
