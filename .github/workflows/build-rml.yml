@@ -52,22 +52,19 @@ jobs:
           echo ""
           echo "EOFEOF"
         } >> "$GITHUB_ENV"
-        echo "!"
-        cat "$GITHUB_ENV"
     - name: Get Resonite from Cache
       id: cache-resonite
       uses: actions/cache@v3.3.3
       with:
         path: "${{ env.ResonitePath }}"
         key: "${{ fromJson( env.APP_INFO ).data['2519830'].depots.branches.public.buildid }}"
-    - name: Fetch Steam
+    - name: Download Steam
       if: steps.cache-resonite.outputs.cache-hit != 'true'
       uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
-    - name: Fetch Resonite
+    - name: Download Resonite
       if: steps.cache-resonite.outputs.cache-hit != 'true'
       run: |
         steamcmd '+@sSteamCmdForcePlatformType windows' '+force_install_dir "${{ env.ResonitePath }}"' '+login "${{ secrets.STEAM_USER }}" "${{ secrets.STEAM_TOKEN }}"' '+app_license_request 2519830' '+app_update 2519830 validate' '+quit'
-        ls $ResonitePath
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -85,6 +82,7 @@ jobs:
         out-file-path: RML/
     - name: Move ResoniteModLoader files
       run: |
+        ls -l $ResonitePath
         mkdir -p "$ResonitePath/rml_mods"
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
