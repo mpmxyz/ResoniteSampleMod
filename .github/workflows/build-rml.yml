@@ -41,27 +41,36 @@ jobs:
   build-ResoniteModLoader:
     runs-on: ubuntu-latest
     steps:
-    - name: Fetch Steam
-      uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
-    - name: Fetch resonite
+    - name: Get Resonite Infos
       run: |
-        steamcmd +@sSteamCmdForcePlatformType windows +login '${{ secrets.STEAM_USER }}' '${{ secrets.STEAM_TOKEN }}' +force_install_dir '${{ env.ResonitePath }}' +app_license_request 2519830 +app_update 2519830 validate +quit
+        {
+          echo 'APP_INFO<<EOFEOF'
+          curl https://api.steamcmd.net/v1/info/2519830
+          echo 'EOFEOF'
+        }
+    - name: Get Resonite from Cache
+      id: cache-resonite
+      uses: actions/cache@v3.3.3
+      with:
+        path: "${{ env.ResonitePath }}"
+        key: "${{ fromJson().data['2519830'].depots.branches.public.buildid }}"
+    - name: Fetch Steam
+      if: steps.cache-resonite.outputs.cache-hit != 'true'
+      uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
+    - name: Fetch Resonite
+      if: steps.cache-resonite.outputs.cache-hit != 'true'
+      run: |
+        steamcmd '+@sSteamCmdForcePlatformType windows' '+force_install_dir "${{ env.ResonitePath }}"' '+login "${{ secrets.STEAM_USER }}" "${{ secrets.STEAM_TOKEN }}"' '+app_license_request 2519830' '+app_update 2519830 validate' '+quit'
         ls $ResonitePath
       working-directory: "${{ github.workspace }}"
-    - name: Fetch repository
-      uses: actions/checkout@v4
-      with:
-        path: ${{ env.PROJECT_PATH }}
-    - name: Fetch latest Resonite
-      uses: actions/checkout@v4
-      with:
-        repository: ${{ env.RESONITE_CLONE_REPO }}
-        token: ${{ secrets.RESONITE_CLONE_TOKEN }}
-        path: ${{ env.ResonitePath }}/..
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Fetch repository
+      uses: actions/checkout@v4
+      with:
+        path: ${{ env.PROJECT_PATH }}
     - name: Fetch latest ResoniteModLoader
       uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
