@@ -19,7 +19,9 @@ on:
         required: false
         default: ""
     secrets:
-      RESONITE_CLONE_TOKEN:
+      STEAM_USER:
+        required: true
+      STEAM_TOKEN:
         required: true
 env:
   ARTIFACT_NAME: "SampleMod"
@@ -33,7 +35,6 @@ env:
   OUTPUT_FOLDER: "bin/MonkeyLoader/Release"
   TEST_PROJECT_FILE: "Test/Test.csproj"
   MOD_LOADER_TEST_PROJECT_FILE: "TestMonkey/TestMonkey.csproj"
-  RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
   run:
     working-directory: "./repo"
@@ -41,20 +42,40 @@ jobs:
   build-MonkeyLoader:
     runs-on: ubuntu-latest
     steps:
-    - name: Fetch repository
-      uses: actions/checkout@v4
+    - name: Ensure working directory exists
+      run: mkdir -p '${{ env.PROJECT_PATH }}'
+      working-directory: "${{ github.workspace }}"
+    - name: Get Resonite Infos
+      run: |
+        {
+          echo "APP_INFO<<EOFEOF"
+          curl https://api.steamcmd.net/v1/info/2519830
+          echo ""
+          echo "EOFEOF"
+        } >> "$GITHUB_ENV"
+    - name: Get Resonite from Cache
+      id: cache-resonite
+      uses: actions/cache@v3.3.3
       with:
-        path: ${{ env.PROJECT_PATH }}
-    - name: Fetch latest Resonite
-      uses: actions/checkout@v4
-      with:
-        repository: ${{ env.RESONITE_CLONE_REPO }}
-        token: ${{ secrets.RESONITE_CLONE_TOKEN }}
-        path: ${{ env.ResonitePath }}/..
+        path: "${{ env.ResonitePath }}"
+        key: "${{ fromJson( env.APP_INFO ).data['2519830'].depots.branches.public.buildid }}"
+    - name: Download Steam
+      if: steps.cache-resonite.outputs.cache-hit != 'true'
+      uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
+    - name: Download Resonite
+      if: steps.cache-resonite.outputs.cache-hit != 'true'
+      run: |
+        steamcmd '+@sSteamCmdForcePlatformType windows' '+force_install_dir "${{ env.ResonitePath }}"' '+login "${{ secrets.STEAM_USER }}" "${{ secrets.STEAM_TOKEN }}"' '+app_license_request 2519830' '+app_update 2519830 validate' '+quit'
+        #The following line makes the cache much much smaller:
+        rm -r '${{ env.ResonitePath }}/RuntimeData/PreCache'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Fetch repository
+      uses: actions/checkout@v4
+      with:
+        path: ${{ env.PROJECT_PATH }}
     - name: Fetch MonkeyLoader
       uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
       with:
