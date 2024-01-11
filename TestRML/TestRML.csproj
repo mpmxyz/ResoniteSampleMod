@@ -24,24 +24,8 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Remove="obj\MonkeyLoader\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\MonkeyLoader\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\RML\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\RML\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\MonkeyLoader\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\MonkeyLoader\Debug\net472\TestRML.AssemblyInfo.cs" />
-		<Compile Remove="obj\MonkeyLoader\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\MonkeyLoader\Release\net472\TestRML.AssemblyInfo.cs" />
-		<Compile Remove="obj\RML\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\RML\Debug\net472\TestRML.AssemblyInfo.cs" />
-		<Compile Remove="obj\RML\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\RML\Release\net472\TestRML.AssemblyInfo.cs" />
-		<Compile Remove="obj\Common\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\Common\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\Common\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\Common\Debug\net472\TestRML.AssemblyInfo.cs" />
-		<Compile Remove="obj\Common\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-		<Compile Remove="obj\Common\Release\net472\TestRML.AssemblyInfo.cs" />
+		<Compile Remove="obj\**\*AssemblyAttributes.cs" />
+		<Compile Remove="obj\**\*AssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Properties\" />

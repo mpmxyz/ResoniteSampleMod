@@ -24,7 +24,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PatchesHarmony.cs" />
-    <Compile Include="SampleModRML.cs" />
+    <Folder Include="Mod.RML"/>
+    <Folder Include="Patches.Harmony"/>
+    <Compile Include="Mod.RML/**/*.cs"/>
+    <Compile Include="Patches.Harmony/**/*.cs"/>
   </ItemGroup>
 </Project>
