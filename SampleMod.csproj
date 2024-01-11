@@ -10,7 +10,7 @@
     <Product>SampleMod</Product>
     <Description>A sample Resonite Mod</Description>
     <Copyright>CC0</Copyright>
-    <Version>1.1.2</Version>
+    <Version>2.0.0</Version>
     <PackageProjectUrl>$(PROJECT_URL)</PackageProjectUrl>
     <PackageReleaseNotes>$(RELEASE_NOTES)</PackageReleaseNotes>
     <PackageTags>Resonite</PackageTags>
@@ -47,24 +47,33 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);obj/**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="bin\**" />
-    <Compile Remove="MonkeyLoader GamePacks\**" />
-    <Compile Remove="MonkeyLoader Mods\**" />
-    <Compile Remove="Test\**" />
-    <Compile Remove="TestRML\**" />
-    <Compile Remove="TestMonkey\**" />
-    <EmbeddedResource Remove="bin\**" />
-    <EmbeddedResource Remove="MonkeyLoader GamePacks\**" />
-    <EmbeddedResource Remove="MonkeyLoader Mods\**" />
-    <EmbeddedResource Remove="Test\**" />
-    <EmbeddedResource Remove="TestRML\**" />
-    <EmbeddedResource Remove="TestMonkey\**" />
-    <None Remove="bin\**" />
-    <None Remove="MonkeyLoader GamePacks\**" />
-    <None Remove="MonkeyLoader Mods\**" />
-    <None Remove="Test\**" />
-    <None Remove="TestRML\**" />
-    <None Remove="TestMonkey\**" />
+	  <Compile Remove="bin\**" />
+	  <Compile Remove="Mod.Monkey\**" />
+	  <Compile Remove="Mod.RML\**" />
+	  <Compile Remove="MonkeyLoader GamePacks\**" />
+	  <Compile Remove="MonkeyLoader Mods\**" />
+	  <Compile Remove="Patches.Harmony\**" />
+	  <Compile Remove="TestMonkey\**" />
+	  <Compile Remove="TestRML\**" />
+	  <Compile Remove="Test\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <EmbeddedResource Remove="Mod.Monkey\**" />
+	  <EmbeddedResource Remove="Mod.RML\**" />
+	  <EmbeddedResource Remove="MonkeyLoader GamePacks\**" />
+	  <EmbeddedResource Remove="MonkeyLoader Mods\**" />
+	  <EmbeddedResource Remove="Patches.Harmony\**" />
+	  <EmbeddedResource Remove="TestMonkey\**" />
+	  <EmbeddedResource Remove="TestRML\**" />
+	  <EmbeddedResource Remove="Test\**" />
+	  <None Remove="bin\**" />
+	  <None Remove="Mod.Monkey\**" />
+	  <None Remove="Mod.RML\**" />
+	  <None Remove="MonkeyLoader GamePacks\**" />
+	  <None Remove="MonkeyLoader Mods\**" />
+	  <None Remove="Patches.Harmony\**" />
+	  <None Remove="TestMonkey\**" />
+	  <None Remove="TestRML\**" />
+	  <None Remove="Test\**" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -112,31 +121,15 @@
     <InternalsVisibleTo Include="TestMonkey" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="obj\MonkeyLoader\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\MonkeyLoader\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\RML\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\RML\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\MonkeyLoader\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\MonkeyLoader\Debug\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="obj\MonkeyLoader\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\MonkeyLoader\Release\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="obj\RML\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\RML\Debug\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="obj\RML\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\RML\Release\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="obj\Common\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\Common\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\Common\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\Common\Debug\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="obj\Common\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\Common\Release\net472\Test.AssemblyInfo.cs" />
-    <Compile Remove="PatchesHarmony.cs" />
+    <Compile Remove="obj\**\*AssemblyAttributes.cs" />
+    <Compile Remove="obj\**\*AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Remove="Test" />
     <Folder Remove="TestRML" />
     <Folder Remove="TestMonkey" />
-    <Compile Remove="SampleModRML.cs" />
-    <Compile Remove="SampleModMonkey.cs" />
+    <Folder Remove="Patches.Harmony" />
+    <Folder Remove="Mod.Monkey" />
+    <Folder Remove="Mod.RML" />
   </ItemGroup>
 </Project>

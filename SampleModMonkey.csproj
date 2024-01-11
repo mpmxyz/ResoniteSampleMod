@@ -20,7 +20,6 @@
     <Exec Condition="$([MSBuild]::IsOSPlatform('Linux'))" Command="cp -f &quot;$(OutputPath)/../$(AssemblyName).$(Version).nupkg&quot; &quot;$(ResonitePath)/MonkeyLoader/Mods/$(AssemblyName).nupkg&quot;" />
   </Target>
   <ItemGroup>
-    <Compile Update="SampleModMonkey.cs" />
     <Reference Include="Harmony">
       <HintPath>$(ResonitePath)\0Harmony.dll</HintPath>
     </Reference>
@@ -30,7 +29,9 @@
     <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="1.0.1" />    
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PatchesHarmony.cs" />
-    <Compile Include="SampleModMonkey.cs" />
+    <Folder Include="Mod.Monkey"/>
+    <Folder Include="Patches.Harmony"/>
+    <Compile Include="Mod.Monkey/**/*.cs"/>
+    <Compile Include="Patches.Harmony/**/*.cs"/>
   </ItemGroup>
 </Project>

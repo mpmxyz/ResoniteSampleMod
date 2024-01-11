@@ -53,7 +53,7 @@ jobs:
       - name: "Fill mod version template"
         uses: mpmxyz/merge-json-with-template@79884260de99e04a77e8db68d72c8544ee03156c
         with:
-          source-file: "${{ env.CHECKOUT_PATH }}/ResoniteModLoader/manifest-template.json"
+          source-file: "${{ env.CHECKOUT_PATH }}/Mod.RML/manifest-template.json"
           target-file: "/tmp/filled-template.json"
 
       - name: "Create hashes"
