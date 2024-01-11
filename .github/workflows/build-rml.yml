@@ -47,6 +47,7 @@ jobs:
       run: |
         steamcmd +@sSteamCmdForcePlatformType windows +login '${{ secrets.STEAM_USER }}' '${{ secrets.STEAM_TOKEN }}' +force_install_dir '${{ env.ResonitePath }}' +app_license_request 2519830 +app_update 2519830 validate +quit
         ls $ResonitePath
+      working-directory: "${{ github.workspace }}"
     - name: Fetch repository
       uses: actions/checkout@v4
       with:
