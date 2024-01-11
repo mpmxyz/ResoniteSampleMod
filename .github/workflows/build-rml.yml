@@ -50,7 +50,7 @@ jobs:
           echo 'APP_INFO<<EOFEOF'
           curl https://api.steamcmd.net/v1/info/2519830
           echo 'EOFEOF'
-        }
+        } >> "$GITHUB_ENV"
     - name: Get Resonite from Cache
       id: cache-resonite
       uses: actions/cache@v3.3.3
