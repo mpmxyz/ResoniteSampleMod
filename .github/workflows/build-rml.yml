@@ -44,7 +44,9 @@ jobs:
     - name: Fetch Steam
       uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
     - name: Fetch resonite
-      run: steamcmd +@sSteamCmdForcePlatformType windows +login '${{ secrets.STEAM_USER }}' '${{ secrets.STEAM_TOKEN }}' +force_install_dir '${{ env.ResonitePath }}' +app_license_request 2519830 +app_update 2519830 validate +quit
+      run: |
+        steamcmd +@sSteamCmdForcePlatformType windows +login '${{ secrets.STEAM_USER }}' '${{ secrets.STEAM_TOKEN }}' +force_install_dir '${{ env.ResonitePath }}' +app_license_request 2519830 +app_update 2519830 validate +quit
+        ls $ResonitePath
     - name: Fetch repository
       uses: actions/checkout@v4
       with:
