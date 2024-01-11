@@ -53,7 +53,7 @@ jobs:
       uses: actions/cache@v3.3.3
       with:
         path: "${{ env.ResonitePath }}"
-        key: "${{ fromJson().data['2519830'].depots.branches.public.buildid }}"
+        key: "${{ fromJson( env.APP_INFO ).data['2519830'].depots.branches.public.buildid }}"
     - name: Fetch Steam
       if: steps.cache-resonite.outputs.cache-hit != 'true'
       uses: CyberAndrii/setup-steamcmd@b786e0da44db3d817e66fa3910a9560cb28c9323
