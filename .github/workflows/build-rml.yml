@@ -49,7 +49,8 @@ jobs:
         {
           echo "APP_INFO<<EOFEOF"
           curl https://api.steamcmd.net/v1/info/2519830
-          echo "\nEOFEOF"
+          echo ""
+          echo "EOFEOF"
         } >> "$GITHUB_ENV"
         echo "!"
         cat "$GITHUB_ENV"
