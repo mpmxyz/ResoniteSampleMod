@@ -65,6 +65,8 @@ jobs:
       if: steps.cache-resonite.outputs.cache-hit != 'true'
       run: |
         steamcmd '+@sSteamCmdForcePlatformType windows' '+force_install_dir "${{ env.ResonitePath }}"' '+login "${{ secrets.STEAM_USER }}" "${{ secrets.STEAM_TOKEN }}"' '+app_license_request 2519830' '+app_update 2519830 validate' '+quit'
+        #The following line makes the cache much much smaller:
+        rm -r '${{ env.ResonitePath }}/RuntimeData/PreCache'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
