@@ -109,6 +109,8 @@ jobs:
     uses: ./.github/workflows/check-repository-setup.yml
     secrets:
       RML_MANIFEST_TOKEN: "${{ secrets.RML_MANIFEST_TOKEN }}"
-      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
+      STEAM_USER: "${{ secrets.STEAM_USER }}"
+      STEAM_TOKEN: "${{ secrets.STEAM_TOKEN }}"
+
     
     

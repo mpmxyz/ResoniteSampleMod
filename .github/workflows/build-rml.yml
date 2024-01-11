@@ -19,7 +19,9 @@ on:
         required: false
         default: ""
     secrets:
-      RESONITE_CLONE_TOKEN:
+      STEAM_USER:
+        required: true
+      STEAM_TOKEN:
         required: true
 env:
   ARTIFACT_NAME: "SampleMod"
@@ -33,7 +35,6 @@ env:
   OUTPUT_FOLDER: "bin/RML/Release/net472"
   TEST_PROJECT_FILE: "Test/Test.csproj"
   MOD_LOADER_TEST_PROJECT_FILE: "TestRML/TestRML.csproj"
-  RESONITE_CLONE_REPO: "${{ github.repository_owner }}/ResoniteFiles"
 defaults:
   run:
     working-directory: "./repo"

@@ -9,7 +9,7 @@ namespace SampleMod
     {
         public override string Name => "SampleMod";
         public override string Author => "mpmxyz";
-        public override string Version => "2.0.0"; //Version of the mod, should match the AssemblyVersion
+        public override string Version => "3.0.0"; //Version of the mod, should match the AssemblyVersion
         public override string Link => "https://github.com/mpmxyz/ResoniteSampleMod";
 
 

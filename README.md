@@ -26,14 +26,14 @@ Additional Notes:
   If you open multiple variants at a time you may encounter warning messages and cannot save changes to the csproj files!
   Restarting Visual Studio makes sure that the error messages go away.
 - You can freely add dependencies to your project. Shared dependencies should be added to the project SampleMod.csproj (without suffix!) to keep dependencies of the variants in sync.
-- Unit tests are run on the mod loader independent project.
+- There are unit tests using the mod loader independent project.
 - You can start Resonite directly from Visual Studio. The dll files/NuGet packages will be directly copied into the Resonite install.
   If you add additional files you have to adjust the scripts in the files SampleModMonkey.csproj and SampleModRML.csproj.
   The file ```manifest-template.json``` and the step ```Build``` of workflow ```Build & Test (ResoniteModLoader)``` need to be adjusted for proper release automation, too.
   (TODO: hints for NuGet-based MonkeyLoader mods)
 
 ## Publishing a new Mod Version
-1. Increment the &lt;Version&gt; number within the file ```SampleMod.csproj```
+1. Increment the &lt;Version&gt; number within the files ```SampleMod.csproj``` and ```Mod.RML/SampleModRML.cs```
 2. Execute the github workflow ```Create Release```
 
 ## Installation (ResoniteModLoader)

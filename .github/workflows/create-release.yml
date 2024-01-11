@@ -51,7 +51,8 @@ jobs:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
     secrets: 
-      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
+      STEAM_USER: "${{ secrets.STEAM_USER }}"
+      STEAM_TOKEN: "${{ secrets.STEAM_TOKEN }}"
   compile-monkey:
     if: ${{ inputs.release-monkey }}
     uses: ./.github/workflows/build-monkey.yml
@@ -60,7 +61,8 @@ jobs:
       RELEASE_VERSION: "${{ inputs.version }}"
       RELEASE_NOTES: "${{ inputs.description }}"
     secrets: 
-      RESONITE_CLONE_TOKEN: "${{ secrets.RESONITE_CLONE_TOKEN }}"
+      STEAM_USER: "${{ secrets.STEAM_USER }}"
+      STEAM_TOKEN: "${{ secrets.STEAM_TOKEN }}"
 
   create-github-release:
     if: ${{ inputs.release-rml }}
