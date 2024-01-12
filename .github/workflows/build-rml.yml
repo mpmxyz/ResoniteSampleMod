@@ -85,7 +85,6 @@ jobs:
         out-file-path: RML/
     - name: Move ResoniteModLoader files
       run: |
-        ls -l $ResonitePath
         mkdir -p "$ResonitePath/rml_mods"
         mkdir -p "$ResonitePath/rml_libs"
         mkdir -p "$ResonitePath/Libraries"
