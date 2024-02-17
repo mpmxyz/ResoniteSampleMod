@@ -43,7 +43,7 @@ Additional Notes:
 
 ## Installation (MonkeyLoader)
 (Work in Progress)
-1. Install [MonkeyLoader](https://github.com/Banane9/MonkeyLoader).
-2. Add package source "https://nuget.pkg.github.com/mpmxyz/index.json"
-3. Add package "mpmxyz.SampleMod.MonkeyLoader"
-4. Start Resonite.
+1. ~Install [MonkeyLoader](https://github.com/Banane9/MonkeyLoader).~
+2. ~Add package source "https://nuget.pkg.github.com/mpmxyz/index.json"~
+3. ~Add package "mpmxyz.SampleMod.MonkeyLoader"~
+4. ~Start Resonite.~
