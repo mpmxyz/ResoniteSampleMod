@@ -1,3 +1,5 @@
+## This mod template has not been updated for a while. The complexity of having to support two mod loaders was not worth it. I have created [a new template](https://github.com/mpmxyz/RMLModTemplate) which focuses on Resonite Mod Loader. (MonkeyLoader can still run RML mods but not the other way around.)
+
 # ResoniteSampleMod
 [![Build & Test (MonkeyLoader)](https://github.com/mpmxyz/ResoniteSampleMod/actions/workflows/build-monkey.yml/badge.svg?branch=main)](https://github.com/mpmxyz/ResoniteSampleMod/actions/workflows/build-monkey.yml)
 [![Build & Test (ResoniteModLoader)](https://github.com/mpmxyz/ResoniteSampleMod/actions/workflows/build-rml.yml/badge.svg?branch=main)](https://github.com/mpmxyz/ResoniteSampleMod/actions/workflows/build-rml.yml)
